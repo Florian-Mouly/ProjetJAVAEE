@@ -10,9 +10,9 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import model.DAO;
-import model.DataSourceFactory;
-import model.DiscountCode;
+import model.DAO.DAO;
+import model.DAO.DataSourceFactory;
+import model.Entities.DiscountCode;
 import org.apache.derby.tools.ij;
 
 /**
