@@ -1,5 +1,6 @@
 package servlet;
 
+import DAO.ClientDAO;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
@@ -10,9 +11,10 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import model.DAO.DAO;
-import model.DAO.DataSourceFactory;
-import model.Entities.DiscountCode;
+import DAO.DAO;
+import DAO.DataSourceFactory;
+import Entities.Client;
+import Entities.DiscountCode;
 import org.apache.derby.tools.ij;
 
 /**
@@ -36,37 +38,38 @@ public class ApplicationListener implements ServletContextListener {
 	private boolean databaseExists() {
 		boolean result = false;
 
-		DAO dao = new DAO(DataSourceFactory.getDataSource());
-		try {
-			List<DiscountCode> allCodes = dao.allCodes();
-			Logger.getLogger("DiscountEditor").log(Level.INFO, "Database already exists");
+                ClientDAO dao = new ClientDAO(DataSourceFactory.getDataSource());
+                try {
+			List<Client> allClient = dao.allClient();
+			Logger.getLogger("comptoir_data").log(Level.INFO, "Database already exists");
 			result = true;
 		} catch (SQLException ex) {
-			Logger.getLogger("DiscountEditor").log(Level.INFO, "Database does not exist");
+			Logger.getLogger("comptoir_data").log(Level.INFO, "Database does not exist");
 		}
 		return result;
 	}
 
 	private void initializeDatabase() {
-		OutputStream nowhere = new OutputStream() {
+                OutputStream nowhere = new OutputStream() {
 			@Override
 			public void write(int b) {
 			}
 		};
 		
-		Logger.getLogger("DiscountEditor").log(Level.INFO, "Creating databse from SQL script");
+		Logger.getLogger("comptoir_data").log(Level.INFO, "Creating databse from SQL script");
 		try {
 			Connection connection = DataSourceFactory.getDataSource().getConnection();
 			//int result = ij.runScript(connection, this.getClass().getResourceAsStream("comptoirs_data.sql"), "UTF-8", System.out, "UTF-8");
-                        int result = ij.runScript(connection, this.getClass().getResourceAsStream("export.sql"), "UTF-8", System.out, "UTF-8");
+                        int result = ij.runScript(connection, this.getClass().getResourceAsStream("comptoir_data.sql"), "UTF-8", System.out, "UTF-8");
 			if (result == 0) {
-				Logger.getLogger("DiscountEditor").log(Level.INFO, "Database succesfully created");
+				Logger.getLogger("comptoir_data").log(Level.INFO, "Database succesfully created");
 			} else {
-				Logger.getLogger("DiscountEditor").log(Level.SEVERE, "Errors creating database");
+				Logger.getLogger("comptoir_data").log(Level.SEVERE, "Errors creating database");
 			}
 		} catch (UnsupportedEncodingException | SQLException e) {
-			Logger.getLogger("DiscountEditor").log(Level.SEVERE, null, e);
+			Logger.getLogger("comptoir_data").log(Level.SEVERE, null, e);
 		}
 
+               
 	}
 }

@@ -1,4 +1,4 @@
-package model.Entities;
+package Entities;
 
 /**
  * Un enregistrement de la table DISCOUNT_CODE

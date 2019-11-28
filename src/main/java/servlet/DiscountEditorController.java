@@ -1,5 +1,6 @@
 package servlet;
 
+import DAO.ClientDAO;
 import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
@@ -9,8 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.DAO.DAO;
-import model.DAO.DataSourceFactory;
+import DAO.DAO;
+import DAO.DataSourceFactory;
 
 /**
  * Le contrôleur de l'application
@@ -35,26 +36,26 @@ public class DiscountEditorController extends HttpServlet {
 		String code = request.getParameter("code");
 		String taux = request.getParameter("taux");
 		try {
-			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			request.setAttribute("codes", dao.allCodes());			
+			ClientDAO dao = new ClientDAO(DataSourceFactory.getDataSource());
+			request.setAttribute("clients", dao.allClient());			
 			switch (action) {
 				case "ADD": // Requête d'ajout (vient du formulaire de saisie)
 					dao.addDiscountCode(code, Float.valueOf(taux));
 					request.setAttribute("message", "Code " + code + " Ajouté");
-					request.setAttribute("codes", dao.allCodes());								
+					request.setAttribute("clients", dao.allClient());								
 					break;
 				case "DELETE": // Requête de suppression (vient du lien hypertexte)
 					try {
 						dao.deleteDiscountCode(code);
 						request.setAttribute("message", "Code " + code + " Supprimé");
-						request.setAttribute("codes", dao.allCodes());								
+						request.setAttribute("clients", dao.allClient());								
 					} catch (SQLIntegrityConstraintViolationException e) {
 						request.setAttribute("message", "Impossible de supprimer " + code + ", ce code est utilisé.");
 					}
 					break;
 			}
 		} catch (Exception ex) {
-			Logger.getLogger("discountEditor").log(Level.SEVERE, "Action en erreur", ex);
+			Logger.getLogger("comptoir_data").log(Level.SEVERE, "Action en erreur", ex);
 			request.setAttribute("message", ex.getMessage());
 		} finally {
 

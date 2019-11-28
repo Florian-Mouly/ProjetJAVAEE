@@ -1,4 +1,4 @@
-package model.DAO;
+package DAO;
 
 import javax.sql.DataSource;
 

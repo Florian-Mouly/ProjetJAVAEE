@@ -1,6 +1,7 @@
-package model.DAO;
+package DAO;
 
-import model.Entities.DiscountCode;
+import Entities.Client;
+import Entities.DiscountCode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import javax.sql.DataSource;
 
 
 
-public class DAO {
+public class ClientDAO {
 
 	private final DataSource myDataSource;
 
@@ -19,7 +20,7 @@ public class DAO {
 	 * Construit le AO avec sa source de données
 	 * @param dataSource la source de données à utiliser
 	 */
-	public DAO(DataSource dataSource) {
+	public ClientDAO(DataSource dataSource) {
 		this.myDataSource = dataSource;
 	}
 
@@ -28,18 +29,18 @@ public class DAO {
 	 * @return Liste des discount codes
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public List<DiscountCode> allCodes() throws SQLException {
+	public List<Client> allClient() throws SQLException {
 
-		List<DiscountCode> result = new LinkedList<>();
+		List<Client> result = new LinkedList<>();
 
-		String sql = "SELECT * FROM DISCOUNT_CODE ORDER BY DISCOUNT_CODE";
+		String sql = "SELECT * FROM Client ORDER BY Code";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				String id = rs.getString("DISCOUNT_CODE");
-				float rate = rs.getFloat("RATE");
-				DiscountCode c = new DiscountCode(id, rate);
+				String Code = rs.getString("Code");
+				String Contact = rs.getString("Contact");
+				Client c = new Client(Code, Contact);
 				result.add(c);
 			}
 		}
