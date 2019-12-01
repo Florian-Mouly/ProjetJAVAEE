@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,8 +23,8 @@ public class ClientDAOTest {
 	}
 	
 	/**
-	 * Test of numberOfCustomers method, of class DAO.
-	 * @throws simplejdbc.DAOException
+	 * Test of allClient method, of class ClientDAO.
+	 * @throws simplejdbc.SQLException
 	 */
 	@Test
 	public void testNumberOfCustomers() throws SQLException{
@@ -31,18 +32,22 @@ public class ClientDAOTest {
 		assertEquals(91, result.size());
 	}
         
-//
-//	/**
-//	 * Test of numberOfOrdersForCustomer method, of class DAO.
-//	 * @throws simplejdbc.DAOException
-//	 */
-//	@Test
-//	public void testNumberOfOrdersForCustomer() throws DAOException {
-//		int customerId = 36;
-//		int expResult = 2;
-//		int result = myDAO.numberOfOrdersForCustomer(customerId);
-//		assertEquals(expResult, result); // Le client 36 a 2 bons de commande
-//	}
+
+	/**
+	 * Test of getClient method, of class ClientDAO.
+	 * @throws simplejdbc.SQLException
+	 */
+	@Test
+	public void testgetclient() throws SQLException {
+                //exist
+		String clientContact = "Maria Anders";
+		Client result = myDAO.getClient(clientContact);
+		assertEquals(clientContact, result.getContact());
+                //don't exist
+                clientContact = "test";
+                result = myDAO.getClient(clientContact);
+                assertEquals(null, result);
+	}
 //
 //	/**
 //	 * Test of findCustomer method, of class DAO.

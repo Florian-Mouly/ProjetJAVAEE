@@ -25,8 +25,8 @@ public class ClientDAO {
 	}
 
 	/**
-	 * Contenu de la table DISCOUNT_CODE
-	 * @return Liste des discount codes
+	 * Contenu de la table Cleint
+	 * @return Liste des clent
 	 * @throws SQLException renvoyées par JDBC
 	 */
 	public List<Client> allClient() throws SQLException {
@@ -40,8 +40,32 @@ public class ClientDAO {
 			while (rs.next()) {
 				String Code = rs.getString("Code");
 				String Contact = rs.getString("Contact");
-				Client c = new Client(Code, Contact);
+				Client c = new Client(Code, Contact, null, null, null, null, null, null, null, null, null);
 				result.add(c);
+			}
+		}
+		return result;
+	}
+        
+        /**
+	 * Contenu de la table Cleint
+	 * @return Liste des clent
+	 * @throws SQLException renvoyées par JDBC
+	 */
+	public Client getClient(String contact) throws SQLException {
+
+		Client result=null;
+
+		String sql = "SELECT * FROM Client WHERE Contact=?";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setString(1, contact);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				String Code = rs.getString("Code");
+				String Contact = rs.getString("Contact");
+				Client c = new Client(Code, Contact, null, null, null, null, null, null, null, null, null);
+				result=c;
 			}
 		}
 		return result;
