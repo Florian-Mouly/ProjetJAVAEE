@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebListener;
 import DAO.DAO;
 import DAO.DataSourceFactory;
 import Entities.Client;
-import Entities.DiscountCode;
 import org.apache.derby.tools.ij;
 
 /**

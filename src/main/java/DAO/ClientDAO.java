@@ -1,7 +1,6 @@
 package DAO;
 
 import Entities.Client;
-import Entities.DiscountCode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,42 +70,42 @@ public class ClientDAO {
 		return result;
 	}
 
-	/**
-	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
-	 * @param code le code (non null)
-	 * @param rate le taux (positive or 0)
-	 * @return 1 si succès, 0 sinon
-	 * @throws SQLException renvoyées par JDBC
-	 */
-	public int addDiscountCode(String code, float rate) throws SQLException {
-		int result = 0;
-		String sql = "INSERT INTO DISCOUNT_CODE VALUES (?, ?)";
-		try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setString(1, code);
-			stmt.setFloat(2, rate);
-			result = stmt.executeUpdate();
-		}
-		return result;
-	}
-
-		
-	/**
-	 * Supprime un enregistrement dans la table DISCOUNT_CODE
-	 * @param code la clé de l'enregistrement à supprimer
-	 * @return le nombre d'enregistrements supprimés (1 ou 0)
-	 * @throws java.sql.SQLException renvoyées par JDBC
-	 **/
-	public int deleteDiscountCode(String code) throws SQLException {
-		int result = 0;
-		String sql = "DELETE FROM DISCOUNT_CODE WHERE DISCOUNT_CODE = ?";
-		try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setString(1, code);
-			result = stmt.executeUpdate();
-		}
-		return result;
-	}
+//	/**
+//	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
+//	 * @param code le code (non null)
+//	 * @param rate le taux (positive or 0)
+//	 * @return 1 si succès, 0 sinon
+//	 * @throws SQLException renvoyées par JDBC
+//	 */
+//	public int addDiscountCode(String code, float rate) throws SQLException {
+//		int result = 0;
+//		String sql = "INSERT INTO DISCOUNT_CODE VALUES (?, ?)";
+//		try (Connection connection = myDataSource.getConnection(); 
+//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+//			stmt.setString(1, code);
+//			stmt.setFloat(2, rate);
+//			result = stmt.executeUpdate();
+//		}
+//		return result;
+//	}
+//
+//		
+//	/**
+//	 * Supprime un enregistrement dans la table DISCOUNT_CODE
+//	 * @param code la clé de l'enregistrement à supprimer
+//	 * @return le nombre d'enregistrements supprimés (1 ou 0)
+//	 * @throws java.sql.SQLException renvoyées par JDBC
+//	 **/
+//	public int deleteDiscountCode(String code) throws SQLException {
+//		int result = 0;
+//		String sql = "DELETE FROM DISCOUNT_CODE WHERE DISCOUNT_CODE = ?";
+//		try (Connection connection = myDataSource.getConnection(); 
+//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+//			stmt.setString(1, code);
+//			result = stmt.executeUpdate();
+//		}
+//		return result;
+//	}
 
 
 }
