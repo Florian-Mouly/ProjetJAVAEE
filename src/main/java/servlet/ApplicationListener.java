@@ -10,8 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
-import DAO.DAO;
 import DAO.DataSourceFactory;
 import Entities.Client;
 import org.apache.derby.tools.ij;
