@@ -60,7 +60,7 @@ public class ClientController extends HttpServlet {
 
 		}
 		// On continue vers la page JSP sélectionnée
-		request.getRequestDispatcher("ajoutDiscount.jsp").forward(request, response);
+		request.getRequestDispatcher("base_affichage.jsp").forward(request, response);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
