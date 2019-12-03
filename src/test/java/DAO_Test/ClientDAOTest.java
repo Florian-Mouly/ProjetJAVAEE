@@ -48,6 +48,7 @@ public class ClientDAOTest {
                 result = myDAO.getClient(clientContact);
                 assertEquals(null, result);
 	}
+
 //
 //	/**
 //	 * Test of findCustomer method, of class DAO.
