@@ -1,4 +1,4 @@
-package DAO_Test;
+/***package DAO_Test;
 
 import DAO.ClientDAO;
 import DAO.DataSourceFactory;
@@ -26,18 +26,18 @@ public class ClientDAOTest {
 	 * Test of allClient method, of class ClientDAO.
 	 * @throws simplejdbc.SQLException
 	 */
-	@Test
+	/**@Test
 	public void testNumberOfCustomers() throws SQLException{
 		List<Client> result = myDAO.allClient();
 		assertEquals(91, result.size());
 	}
         
 
-	/**
+	/***
 	 * Test of getClient method, of class ClientDAO.
 	 * @throws simplejdbc.SQLException
 	 */
-	@Test
+	/*** @Test
 	public void testgetclient() throws SQLException {
                 //exist
 		String clientContact = "Maria Anders";
@@ -105,4 +105,4 @@ public class ClientDAOTest {
 //		}
 //	}
 	
-}
+//}
