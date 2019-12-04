@@ -33,11 +33,11 @@ public class ClientDAOTest {
 	}
         
 
-	/**
+	/***
 	 * Test of getClient method, of class ClientDAO.
 	 * @throws simplejdbc.SQLException
 	 */
-	@Test
+	/*** @Test
 	public void testgetclient() throws SQLException {
                 //exist
 		String clientContact = "Maria Anders";
