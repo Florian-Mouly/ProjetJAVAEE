@@ -18,7 +18,7 @@ import org.junit.Test;
 
 /**
  *
- * @author pedago
+ * @author Flo
  */
 public class CommandeDAOTest {
         private CommandeDAO myDAO; // L'objet à tester
@@ -48,7 +48,7 @@ public class CommandeDAOTest {
 	@Test
 	public void testgetcommande() throws SQLException {
                 //exist
-		String commandeClient = "Vinet";
+		String commandeClient = "VINET";
 		Commande result = myDAO.getCommande(commandeClient);
 		assertEquals(commandeClient, result.getClient());
                 //don't exist
