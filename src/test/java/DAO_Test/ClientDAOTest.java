@@ -45,20 +45,34 @@ public class ClientDAOTest {
 		assertEquals(clientContact, result.getContact());
                 //don't exist
                 clientContact = "test";
-                result = myDAO.getClient(clientContact);
-                assertEquals(null, result);
+                try{
+                    result = myDAO.getClient(clientContact);
+                    fail("//don't exist");
+                }catch(Exception e){
+                    
+                }
 	}
-//
-//	/**
-//	 * Test of findCustomer method, of class DAO.
-//	 * @throws simplejdbc.DAOException
-//	 */
-//	@Test
-//	public void testFindCustomer() throws DAOException {
-//		int customedID = 1;
-//		CustomerEntity result = myDAO.findCustomer(customedID);
-//		assertEquals("Jumbo Eagle Corp", result.getName());
-//	}
+
+        /**
+	 * Test of editClient method, of class ClientDAO.
+	 * @throws simplejdbc.SQLException
+	 */
+	@Test
+	public void testeditclient() throws SQLException{
+                String clientContact = "Maria Anders";
+                String newClientContact = "Maria";
+		Client client = myDAO.getClient(clientContact);
+                myDAO.editClient(client, null, newClientContact, null, null, null, null, null, null, null, null, null);
+                Client newClient=myDAO.getClient(newClientContact);
+                clientContact = "Maria";
+                newClientContact = "Maria Anders";
+		client = myDAO.getClient(clientContact);
+                myDAO.editClient(client, null, newClientContact, null, null, null, null, null, null, null, null, null);
+                newClientContact = "Maria";
+		assertEquals(newClientContact, newClient.getContact());
+	}
+        
+        
 //
 //	/**
 //	 * Test of customersInState method, of class DAO.
