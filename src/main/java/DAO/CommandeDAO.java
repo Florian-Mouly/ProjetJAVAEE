@@ -1,6 +1,6 @@
 package DAO;
 
-import Entities.Client;
+import Entities.Commande;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,22 +24,22 @@ public class CommandeDAO {
 	}
 
 	/**
-	 * Contenu de la table Cleint
-	 * @return Liste des clent
+	 * Contenu de la table Commande
+	 * @return Liste des commandes
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public List<Client> allClient() throws SQLException {
+	public List<Commande> allCommande() throws SQLException {
 
-		List<Client> result = new LinkedList<>();
+		List<Commande> result = new LinkedList<>();
 
-		String sql = "SELECT * FROM Client ORDER BY Code";
+		String sql = "SELECT * FROM Commande ORDER BY Numero";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				String Code = rs.getString("Code");
-				String Contact = rs.getString("Contact");
-				Client c = new Client(Code, Contact, null, null, null, null, null, null, null, null, null);
+				int Numero = rs.getInt("Numero");
+				String Client = rs.getString("Client");
+				Commande c = new Commande(Numero, Client, null, null, null, null, null, null, null, null, null, null);
 				result.add(c);
 			}
 		}
@@ -47,30 +47,32 @@ public class CommandeDAO {
 	}
         
         /**
-	 * Contenu de la table Cleint
-	 * @return Liste des clent
+	 * Affiche la commande faite pas un client
+         * @param client
+	 * @return Commande du client
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public Client getClient(String contact) throws SQLException {
+	public Commande getCommande(String client) throws SQLException {
 
-		Client result=null;
+		Commande result=null;
 
-		String sql = "SELECT * FROM Client WHERE Contact=?";
+		String sql = "SELECT * FROM Commande WHERE Client=?";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setString(1, contact);
+                        stmt.setString(1, client);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				String Code = rs.getString("Code");
-				String Contact = rs.getString("Contact");
-				Client c = new Client(Code, Contact, null, null, null, null, null, null, null, null, null);
+				int Numero = rs.getInt("Numero");
+				String Client = rs.getString("Client");
+				Commande c = new Commande(Numero, Client, null, null, null, null, null, null, null, null, null, null);
 				result=c;
 			}
 		}
 		return result;
 	}
-
-//	/**
+        
+        
+//	/**     
 //	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
 //	 * @param code le code (non null)
 //	 * @param rate le taux (positive or 0)
@@ -106,6 +108,5 @@ public class CommandeDAO {
 //		}
 //		return result;
 //	}
-
-
+        
 }
