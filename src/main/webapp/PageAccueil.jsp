@@ -14,6 +14,7 @@
         <title>Projet JavaEE</title>
     </head>
     <body>
+       
         
         <div class="container-fluid">
 			<div class="row" id="navigation">
@@ -46,6 +47,16 @@
 			</div>
        
            <div class="row" style="background-color:cornsilk; height:90vh; width: 101%" id="vitrine_site">
+               <div class="col">
+                <p>Les Produits : ${list_produit}</p>
+        
+                    <c:forEach items="${ list_produit}" var="produit" varStatus="status">
+                     <p>N°<c:out value="${ produit.getNom() }" />!</p>
+                    </c:forEach>
+            </div>
+          </div>
+
+                
 	
                
             

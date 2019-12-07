@@ -1,10 +1,12 @@
 package DAO;
 
 import Entities.Client;
+import Entities.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
@@ -22,6 +24,19 @@ public class ProduitDAO {
 	public ProduitDAO(DataSource dataSource) {
 		this.myDataSource = dataSource;
 	}
+        
+        public List<Product> allProducts(){
+            
+            List<Product> products = new ArrayList<Product>();
+            
+            Product p = new Product("Produit1");
+            Product p2 = new Product("Produit2");
+            products.add(p);
+            products.add(p);
+            return products;
+            //Tout les produit à recuperer 
+            //A completer
+        }
 
 	/**
 	 * Contenu de la table Cleint

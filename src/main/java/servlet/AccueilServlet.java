@@ -4,6 +4,8 @@ import DAO.CategorieDAO;
 import DAO.ClientDAO;
 import Entities.Client;
 import DAO.DataSourceFactory;
+import DAO.ProduitDAO;
+import Entities.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -23,16 +25,23 @@ import javax.sql.DataSource;
  */
 public class AccueilServlet extends HttpServlet {
     
-    private static DataSource dataSource;
-    private List<Client> all;
-
+    private static DataSource dataSource = DataSourceFactory.getDataSource();
+    public List<Product> list_produit;
+    ProduitDAO  daoproduit = new ProduitDAO(dataSource);
     
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
-        dataSource = DataSourceFactory.getDataSource();  
-        ClientDAO dao = new ClientDAO(dataSource);
-             
+        throws ServletException, IOException{
+        
+        
+//        if(!request.getParameter("name").isEmpty() && !request.getParameter("email").isEmpty()){
+//            HttpSession session = request.getSession();
+//            session.setAttribute("name", request.getParameter("name"));
+//            session.setAttribute("email", request.getParameter("email"));
+//        }
+        
+        list_produit = daoproduit.allProducts();//liste des produits
+        
+        request.setAttribute("list_produit", list_produit);
         
         this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
     }
@@ -47,20 +56,8 @@ public class AccueilServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String email = request.getParameter("email");
-        request.setAttribute("email", email);
-        
-        String name = request.getParameter("name");
-        request.setAttribute("name", name);
-        
-        if(email.equals("admin") && name.equals("admin")){
-            request.setAttribute("message", "vous etes admin");
-        } else{
-            request.setAttribute("message", "vous etes pas admin");
-        }
-        
-        this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
+        processRequest(request, response);
+
     }
 
 

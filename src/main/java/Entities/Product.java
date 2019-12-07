@@ -21,6 +21,10 @@ public class Product {
     private int niveau_de_reapprovi;
     private int indisponible;
     
+    public Product(String nom){
+        this.nom = nom;
+    }
+    
     Product(int pf_reference, String pf_nom, int pf_fournisseur, int pf_categorie, String pf_quantite_par_unite, 
             float pf_prix_unitaire, int pf_unite_en_stock, int pf_unites_commandees, int pf_niveau_de_reapprovi, int pf_indisponible){
         this.reference=pf_reference;
@@ -34,6 +38,8 @@ public class Product {
         this.niveau_de_reapprovi=pf_niveau_de_reapprovi;
         this.indisponible=pf_indisponible;
     }
+
+
 
     public int getReference() {
         return reference;
