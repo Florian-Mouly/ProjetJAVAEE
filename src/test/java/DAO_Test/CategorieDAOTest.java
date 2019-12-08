@@ -22,6 +22,7 @@ public class CategorieDAOTest {
 		myDAO = new CategorieDAO(myDataSource);
 	}
 	
+        
 	/**
 	 * Test of allClient method, of class ClientDAO.
 	 * @throws simplejdbc.SQLException
