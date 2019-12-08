@@ -1,6 +1,6 @@
 package DAO;
 
-import Entities.Client;
+import Entities.Categorie;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,18 +28,19 @@ public class CategorieDAO {
 	 * @return Liste des clent
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public List<Client> allClient() throws SQLException {
+	public List<Categorie> allCategorie() throws SQLException {
 
-		List<Client> result = new LinkedList<>();
+		List<Categorie> result = new LinkedList<>();
 
-		String sql = "SELECT * FROM Client ORDER BY Code";
+		String sql = "SELECT * FROM Categorie ORDER BY Code";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				String Code = rs.getString("Code");
-				String Contact = rs.getString("Contact");
-				Client c = new Client(Code, Contact, null, null, null, null, null, null, null, null, null);
+				int code = rs.getInt("Code");
+				String libelle = rs.getString("Libelle");
+                                String description = rs.getString("Description");
+				Categorie c = new Categorie(code, libelle, description);
 				result.add(c);
 			}
 		}
@@ -47,65 +48,33 @@ public class CategorieDAO {
 	}
         
         /**
-	 * Contenu de la table Cleint
+	 * Contenu de la table Client
 	 * @return Liste des clent
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public Client getClient(String contact) throws SQLException {
+	public Categorie getCategorie(String libelle) throws SQLException {
 
-		Client result=null;
+		Categorie result=null;
 
-		String sql = "SELECT * FROM Client WHERE Contact=?";
+		String sql = "SELECT * FROM Categorie WHERE Libelle=?";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setString(1, contact);
+                        stmt.setString(1, libelle);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				String Code = rs.getString("Code");
-				String Contact = rs.getString("Contact");
-				Client c = new Client(Code, Contact, null, null, null, null, null, null, null, null, null);
+				int Code = rs.getInt("Code");
+				String Libelle = rs.getString("Libelle");
+				String Description = rs.getString("Description");
+				Categorie c = new Categorie(Code, Libelle, Description);
 				result=c;
 			}
 		}
+                if (result==null){
+                   throw new SQLException("categorie introuvable");
+                }
+                
 		return result;
 	}
-
-//	/**
-//	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
-//	 * @param code le code (non null)
-//	 * @param rate le taux (positive or 0)
-//	 * @return 1 si succès, 0 sinon
-//	 * @throws SQLException renvoyées par JDBC
-//	 */
-//	public int addDiscountCode(String code, float rate) throws SQLException {
-//		int result = 0;
-//		String sql = "INSERT INTO DISCOUNT_CODE VALUES (?, ?)";
-//		try (Connection connection = myDataSource.getConnection(); 
-//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-//			stmt.setString(1, code);
-//			stmt.setFloat(2, rate);
-//			result = stmt.executeUpdate();
-//		}
-//		return result;
-//	}
-//
-//		
-//	/**
-//	 * Supprime un enregistrement dans la table DISCOUNT_CODE
-//	 * @param code la clé de l'enregistrement à supprimer
-//	 * @return le nombre d'enregistrements supprimés (1 ou 0)
-//	 * @throws java.sql.SQLException renvoyées par JDBC
-//	 **/
-//	public int deleteDiscountCode(String code) throws SQLException {
-//		int result = 0;
-//		String sql = "DELETE FROM DISCOUNT_CODE WHERE DISCOUNT_CODE = ?";
-//		try (Connection connection = myDataSource.getConnection(); 
-//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-//			stmt.setString(1, code);
-//			result = stmt.executeUpdate();
-//		}
-//		return result;
-//	}
 
 
 }
