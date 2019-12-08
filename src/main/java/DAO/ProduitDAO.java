@@ -38,50 +38,67 @@ public class ProduitDAO {
             //A completer
         }
 
-	/**
-	 * Contenu de la table Cleint
-	 * @return Liste des clent
-	 * @throws SQLException renvoyées par JDBC
-	 */
-	public List<Client> allClient() throws SQLException {
-
-		List<Client> result = new LinkedList<>();
-
-		String sql = "SELECT * FROM Client ORDER BY Code";
-		try (Connection connection = myDataSource.getConnection(); 
+	       /**
+         * 
+         */
+        public List<Product> allProduit() throws SQLException{
+            List<Product> result = new LinkedList<>();
+            String sql = "SELECT * FROM Produit";
+            try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				String Code = rs.getString("Code");
-				String Contact = rs.getString("Contact");
-				Client c = new Client(Code, Contact, null, null, null, null, null, null, null, null, null);
-				result.add(c);
+                            int Reference = rs.getInt("Reference");
+                            String Nom = rs.getString("Nom");
+                            int Fournisseur = rs.getInt("Fournisseur");
+                            int Categorie = rs.getInt("Categorie");
+                            String Quantite_Par_Unite = rs.getString("Quantite_Par_Unite");
+                            float Prix_unitaire = rs.getFloat("Prix_Unitaire");
+                            int Unite_en_Stock = rs.getInt("Unite_en_Stock");
+                            int Unite_commandees = rs.getInt("Unites_commandees");
+                            int Niveau_de_rea = rs.getInt("Niveau_de_rea");
+                            int Indisponible = rs.getInt("Indisponible");
+                            Product p = new Product(Reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unite_en_Stock, Unite_commandees, Niveau_de_rea, Indisponible);
+                            result.add(p);
 			}
 		}
 		return result;
 	}
         
+        
+        
+        
+        
         /**
-	 * Contenu de la table Cleint
-	 * @return Liste des clent
+	 * Produit en fonction de sa reference
+	 * @return Product
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public Client getClient(String contact) throws SQLException {
+	public Product getProduit(int reference) throws SQLException {
 
-		Client result=null;
+		Product result=null;
 
-		String sql = "SELECT * FROM Client WHERE Contact=?";
+		String sql = "SELECT * FROM Product WHERE reference=?";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setString(1, contact);
+                        stmt.setInt(1, reference);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				String Code = rs.getString("Code");
-				String Contact = rs.getString("Contact");
-				Client c = new Client(Code, Contact, null, null, null, null, null, null, null, null, null);
-				result=c;
+                            String Nom = rs.getString("Nom");
+                            int Fournisseur = rs.getInt("Fournisseur");
+                            int Categorie = rs.getInt("Categorie");
+                            String Quantite_Par_Unite = rs.getString("Quantite_Par_Unite");
+                            float Prix_unitaire = rs.getFloat("Prix_Unitaire");
+                            int Unite_en_Stock = rs.getInt("Unite_en_Stock");
+                            int Unite_commandees = rs.getInt("Unites_commandees");
+                            int Niveau_de_rea = rs.getInt("Niveau_de_rea");
+                            int Indisponible = rs.getInt("Indisponible");
+                            Product p = new Product(reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unite_en_Stock, Unite_commandees, Niveau_de_rea, Indisponible);
+                            result = p;
 			}
-		}
+		} catch(Exception e){
+                    throw e;
+                }
 		return result;
 	}
 
