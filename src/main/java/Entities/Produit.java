@@ -9,7 +9,7 @@ package Entities;
  *
  * @author damie
  */
-public class Product {
+public class Produit {
     private int reference;
     private String nom;
     private int fournisseur;
@@ -21,11 +21,11 @@ public class Product {
     private int niveau_de_reapprovi;
     private int indisponible;
     
-    public Product(String nom){
+    public Produit(String nom){
         this.nom = nom;
     }
     
-    public Product(int pf_reference, String pf_nom, int pf_fournisseur, int pf_categorie, String pf_quantite_par_unite, 
+    public Produit(int pf_reference, String pf_nom, int pf_fournisseur, int pf_categorie, String pf_quantite_par_unite, 
             float pf_prix_unitaire, int pf_unite_en_stock, int pf_unites_commandees, int pf_niveau_de_reapprovi, int pf_indisponible){
         this.reference=pf_reference;
         this.nom=pf_nom;

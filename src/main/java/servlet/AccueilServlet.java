@@ -5,7 +5,7 @@ import DAO.ClientDAO;
 import Entities.Client;
 import DAO.DataSourceFactory;
 import DAO.ProduitDAO;
-import Entities.Product;
+import Entities.Produit;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 public class AccueilServlet extends HttpServlet {
     
     private static DataSource dataSource = DataSourceFactory.getDataSource();
-    public List<Product> list_produit;
+    public List<Produit> list_produit;
     ProduitDAO  daoproduit = new ProduitDAO(dataSource);
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

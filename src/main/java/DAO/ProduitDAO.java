@@ -1,7 +1,7 @@
 package DAO;
 
 import Entities.Client;
-import Entities.Product;
+import Entities.Produit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,12 +25,12 @@ public class ProduitDAO {
 		this.myDataSource = dataSource;
 	}
         
-        public List<Product> allProducts(){
+        public List<Produit> allProducts(){
             
-            List<Product> products = new ArrayList<Product>();
+            List<Produit> products = new ArrayList<Produit>();
             
-            Product p = new Product("Produit1");
-            Product p2 = new Product("Produit2");
+            Produit p = new Produit("Produit1");
+            Produit p2 = new Produit("Produit2");
             products.add(p);
             products.add(p);
             return products;
@@ -41,8 +41,8 @@ public class ProduitDAO {
 	       /**
          * 
          */
-        public List<Product> allProduit() throws SQLException{
-            List<Product> result = new LinkedList<>();
+        public List<Produit> allProduit() throws SQLException{
+            List<Produit> result = new LinkedList<>();
             String sql = "SELECT * FROM Produit";
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -58,7 +58,7 @@ public class ProduitDAO {
                             int Unite_commandees = rs.getInt("Unites_commandees");
                             int Niveau_de_rea = rs.getInt("Niveau_de_rea");
                             int Indisponible = rs.getInt("Indisponible");
-                            Product p = new Product(Reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unite_en_Stock, Unite_commandees, Niveau_de_rea, Indisponible);
+                            Produit p = new Produit(Reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unite_en_Stock, Unite_commandees, Niveau_de_rea, Indisponible);
                             result.add(p);
 			}
 		}
@@ -71,12 +71,12 @@ public class ProduitDAO {
         
         /**
 	 * Produit en fonction de sa reference
-	 * @return Product
+	 * @return Produit
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public Product getProduit(int reference) throws SQLException {
+	public Produit getProduit(int reference) throws SQLException {
 
-		Product result=null;
+		Produit result=null;
 
 		String sql = "SELECT * FROM Product WHERE reference=?";
 		try (Connection connection = myDataSource.getConnection(); 
@@ -93,7 +93,7 @@ public class ProduitDAO {
                             int Unite_commandees = rs.getInt("Unites_commandees");
                             int Niveau_de_rea = rs.getInt("Niveau_de_rea");
                             int Indisponible = rs.getInt("Indisponible");
-                            Product p = new Product(reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unite_en_Stock, Unite_commandees, Niveau_de_rea, Indisponible);
+                            Produit p = new Produit(reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unite_en_Stock, Unite_commandees, Niveau_de_rea, Indisponible);
                             result = p;
 			}
 		} catch(Exception e){
