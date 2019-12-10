@@ -1,6 +1,5 @@
 package DAO;
 
-import Entities.Client;
 import Entities.Produit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,11 +53,11 @@ public class ProduitDAO {
                             int Categorie = rs.getInt("Categorie");
                             String Quantite_Par_Unite = rs.getString("Quantite_Par_Unite");
                             float Prix_unitaire = rs.getFloat("Prix_Unitaire");
-                            int Unite_en_Stock = rs.getInt("Unite_en_Stock");
-                            int Unite_commandees = rs.getInt("Unites_commandees");
-                            int Niveau_de_rea = rs.getInt("Niveau_de_rea");
+                            int Unites_en_Stock = rs.getInt("Unites_en_Stock");
+                            int Unites_commandees = rs.getInt("Unites_commandees");
+                            int Niveau_de_reappro = rs.getInt("Niveau_de_reappro");
                             int Indisponible = rs.getInt("Indisponible");
-                            Produit p = new Produit(Reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unite_en_Stock, Unite_commandees, Niveau_de_rea, Indisponible);
+                            Produit p = new Produit(Reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unites_en_Stock, Unites_commandees, Niveau_de_reappro, Indisponible);
                             result.add(p);
 			}
 		}
@@ -78,7 +77,7 @@ public class ProduitDAO {
 
 		Produit result=null;
 
-		String sql = "SELECT * FROM Product WHERE reference=?";
+		String sql = "SELECT * FROM Produit WHERE reference=?";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                         stmt.setInt(1, reference);
@@ -89,11 +88,44 @@ public class ProduitDAO {
                             int Categorie = rs.getInt("Categorie");
                             String Quantite_Par_Unite = rs.getString("Quantite_Par_Unite");
                             float Prix_unitaire = rs.getFloat("Prix_Unitaire");
-                            int Unite_en_Stock = rs.getInt("Unite_en_Stock");
-                            int Unite_commandees = rs.getInt("Unites_commandees");
-                            int Niveau_de_rea = rs.getInt("Niveau_de_rea");
+                            int Unites_en_Stock = rs.getInt("Unites_en_Stock");
+                            int Unites_commandees = rs.getInt("Unites_commandees");
+                            int Niveau_de_reappro = rs.getInt("Niveau_de_reappro");
                             int Indisponible = rs.getInt("Indisponible");
-                            Produit p = new Produit(reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unite_en_Stock, Unite_commandees, Niveau_de_rea, Indisponible);
+                            Produit p = new Produit(reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unites_en_Stock, Unites_commandees, Niveau_de_reappro, Indisponible);
+                            result = p;
+			}
+		} catch(Exception e){
+                    throw e;
+                }
+		return result;
+	}
+        
+        /**
+	 * Produit en fonction de sa reference
+	 * @return Produit
+	 * @throws SQLException renvoyées par JDBC
+	 */
+	public Produit getProduitByName(String name) throws SQLException {
+
+		Produit result=null;
+
+		String sql = "SELECT * FROM Produit WHERE Nom=?";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setString(1, name);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+                            int Reference = rs.getInt("Reference");
+                            int Fournisseur = rs.getInt("Fournisseur");
+                            int Categorie = rs.getInt("Categorie");
+                            String Quantite_Par_Unite = rs.getString("Quantite_Par_Unite");
+                            float Prix_unitaire = rs.getFloat("Prix_Unitaire");
+                            int Unites_en_Stock = rs.getInt("Unites_en_Stock");
+                            int Unites_commandees = rs.getInt("Unites_commandees");
+                            int Niveau_de_reappro = rs.getInt("Niveau_de_reappro");
+                            int Indisponible = rs.getInt("Indisponible");
+                            Produit p = new Produit(Reference, name, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unites_en_Stock, Unites_commandees, Niveau_de_reappro, Indisponible);
                             result = p;
 			}
 		} catch(Exception e){

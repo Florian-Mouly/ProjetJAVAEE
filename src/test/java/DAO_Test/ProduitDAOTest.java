@@ -41,11 +41,28 @@ public class ProduitDAOTest {
             assertEquals(77, result.size());
         }
         
-//        @Test
-//        public void testgetproduit() throws SQLException {
-//            //exist
-//            String nomProduit = "Chai";
-//            Produit result = myDAO.getNom(nomProduit);
-//            
-//        }
+        @Test
+        public void testgetproduitByName() throws SQLException {
+            //exist
+            String nomProduit = "Chai";
+            Produit result = myDAO.getProduitByName(nomProduit);
+            assertEquals(nomProduit, result.getNom());
+            //dont exist
+            nomProduit="test";
+            result = myDAO.getProduitByName(nomProduit);
+            assertEquals(null,result);
+                
+        }
+        
+        @Test
+        public void testGetProduit()throws SQLException {
+            //exist.
+            int reference = 1;
+            Produit result = myDAO.getProduit(reference);
+            assertEquals(reference, result.getReference());
+            //don't exist
+            reference=100;
+            result = myDAO.getProduit(reference);
+            assertEquals(null, result);
+        }
 }
