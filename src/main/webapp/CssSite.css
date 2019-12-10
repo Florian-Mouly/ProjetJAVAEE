@@ -1,0 +1,20 @@
+
+#connexion{
+    position: relative;
+    left: auto;
+}
+
+#navigation{
+    box-shadow : 6px 6px 8px #aaa;
+    padding : 10px;
+
+}
+
+#lesproduits{
+    width: 250px;
+    height: 300px;
+    border: 5px solid black;
+    display: inline-block;
+
+}
+

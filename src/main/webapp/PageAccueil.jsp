@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        	<link rel="stylesheet" href="PagesCSS.css" />
+        	<link rel="stylesheet" href="CssSite.css" />
         	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
@@ -51,7 +51,16 @@
                 <p>Les Produits : ${list_produit}</p>
         
                     <c:forEach items="${ list_produit}" var="produit" varStatus="status">
-                     <p>N°<c:out value="${ produit.getNom() }" />!</p>
+                        
+                     <p id="lesproduits">
+                         
+                      <button type="button" class="btn btn-success">+</button>
+                      <button type="button" class="btn btn-danger">-</button>
+                         
+                         N°<c:out value="${ produit.getNom() }" />!</p>
+                     
+
+
                     </c:forEach>
             </div>
           </div>
