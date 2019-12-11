@@ -78,7 +78,7 @@ public class CommandeDAO {
 	 * compte le nombre de commande par categorie sur une page donnee
          * @param dateDeb debut de la plage a rechercher
          * @param dateFin fin de la plage a rechercher
-	 * @return tableau de in
+	 * @return une hashmap <String, Integer>
 	 * @throws SQLException renvoyées par JDBC
 	 */
 	public Map<String, Integer> getNBCommandeParCateg(String dateDeb, String dateFin) throws SQLException {
@@ -105,7 +105,7 @@ public class CommandeDAO {
 	 * compte le nombre de commande par pays sur une page donnee
          * @param dateDeb debut de la plage a rechercher
          * @param dateFin fin de la plage a rechercher
-	 * @return tableau de in
+	 * @return une hashmap <String, Integer>
 	 * @throws SQLException renvoyées par JDBC
 	 */
 	public Map<String, Integer> getNBCommandeParPays (String dateDeb, String dateFin) throws SQLException {
@@ -131,7 +131,7 @@ public class CommandeDAO {
 	 * compte le nombre de commande par client sur une page donnee
          * @param dateDeb debut de la plage a rechercher
          * @param dateFin fin de la plage a rechercher
-	 * @return tableau de in
+	 * @return une hashmap <String, Integer>
 	 * @throws SQLException renvoyées par JDBC
 	 */
 	public Map<String, Integer> getNBCommandeParClient (String dateDeb, String dateFin) throws SQLException {
@@ -152,6 +152,48 @@ public class CommandeDAO {
 		}
 		return result;
 	}
+        
+        
+        /**
+	 * ajoute une commande a la base donnee
+         * @param com la commande a ajouter
+	 * @throws SQLException renvoyées par JDBC
+	 */
+	public void addCommande (Commande com) throws SQLException {
+            
+                String sql1 = "SELECT max(Numero) as NB FROM Commande Co";
+                int numero=0;
+                try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql1)) {
+                    
+                    ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+                            int nb = rs.getInt("NB");
+                            numero=nb+1;
+			}
+                }
+		
+
+		String sql2 = "insert into commande values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql2)) {
+                        stmt.setInt(1, numero);
+                        stmt.setString(2, com.getClient());
+                        stmt.setString(3, com.getSaisie_le());
+                        stmt.setString(4, com.getEnvoyee_le());
+                        stmt.setDouble(5, com.getPort());
+                        stmt.setString(6, com.getDestinataire());
+                        stmt.setString(7, com.getAdresse_livraison());
+                        stmt.setString(8, com.getVille_livraison());
+                        stmt.setString(9, com.getRegion_livraison());
+                        stmt.setString(10, com.getCode_Postal_livrais());
+                        stmt.setString(11, com.getPays_Livraison());
+                        stmt.setDouble(12, com.getRemise());
+			stmt.executeUpdate();
+		}
+	}
+        
+        
         
         
         

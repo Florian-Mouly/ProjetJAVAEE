@@ -144,4 +144,21 @@ public class CommandeDAOTest {
             assertEquals(attendu.get("Yang Wang"), result.get("Yang Wang"));
 	}
         
+        
+        /**
+	 * Test of addCommande method, of class CommandeDAO.
+	 * @throws simplejdbc.SQLException
+	 */
+	@Test
+	public void testaddCommande() throws SQLException{
+            
+            int resultAv = myDAO.allCommande().size();
+            Commande com=new Commande(1, "VINET", "2019-11-12", "2019-11-13",66.6 , "test", "test", "test", "test", "test", "test", 0.0);
+            myDAO.addCommande(com);
+            
+            int resultAp = myDAO.allCommande().size();
+            
+            assertEquals(resultAv+1,resultAp);
+	}
+        
 }

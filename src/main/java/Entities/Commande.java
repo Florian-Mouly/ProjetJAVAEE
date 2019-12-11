@@ -14,16 +14,16 @@ public class Commande {
     private String Client;
     private String Saisie_le;
     private String Envoyee_le;
-    private Float Port;
+    private Double Port;
     private String Destinataire;
     private String Adresse_livraison;
     private String Ville_livraison;
     private String Region_livraison;
     private String Code_Postal_livrais;
     private String Pays_Livraison;
-    private Float Remise;
+    private Double Remise;
 
-    public Commande(int Numero, String Client, String Saisie_le, String Envoyee_le, Float Port, String Destinataire, String Adresse_livraison, String Ville_livraison, String Region_livraison, String Code_Postal_livrais, String Pays_Livraison, Float Remise) {
+    public Commande(int Numero, String Client, String Saisie_le, String Envoyee_le, Double Port, String Destinataire, String Adresse_livraison, String Ville_livraison, String Region_livraison, String Code_Postal_livrais, String Pays_Livraison, Double Remise) {
         this.Numero = Numero;
         this.Client = Client;
         this.Saisie_le = Saisie_le;
@@ -70,11 +70,11 @@ public class Commande {
         this.Envoyee_le = Envoyee_le;
     }
 
-    public Float getPort() {
+    public Double getPort() {
         return Port;
     }
 
-    public void setPort(Float Port) {
+    public void setPort(Double Port) {
         this.Port = Port;
     }
 
@@ -126,11 +126,11 @@ public class Commande {
         this.Pays_Livraison = Pays_Livraison;
     }
 
-    public Float getRemise() {
+    public Double getRemise() {
         return Remise;
     }
 
-    public void setRemise(Float Remise) {
+    public void setRemise(Double Remise) {
         this.Remise = Remise;
     }
     
