@@ -46,7 +46,7 @@
 				</div>
 			</div>
        
-           <div class="row" style="background-color:cornsilk; height:90vh; width: 101%" id="vitrine_site">
+           <div class="row" style="background-color:cornsilk;width: 101%" id="vitrine_site">
                <div class="col">
                 <p>Les Produits : ${list_produit}</p>
         
