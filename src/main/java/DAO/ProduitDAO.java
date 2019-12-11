@@ -138,6 +138,56 @@ public class ProduitDAO {
 		return result;
 	}
 
+        
+        public void ajoutProduit(String nom,int reference, int fournisseur, int categorie,
+                                    String Quantite_Par_Unite, float Prix_unitaire, int Unites_en_Stock, 
+                                    int Unites_commandees, int Niveau_de_reappro, int Indisponible) throws SQLException {
+            int num = 0;
+            String sql1 = "SELECT max(REFERENCE) as REFERENCE FROM Produit";
+            try (Connection connection = myDataSource.getConnection(); 
+                PreparedStatement stmt = connection.prepareStatement(sql1)) {
+
+                ResultSet rs = stmt.executeQuery();
+                    while (rs.next()) {
+                        int nb = rs.getInt("REFERENCE");
+                        num=nb+1;
+                    }
+            }
+            
+            String sql = "insert INTO Produit VALUES(?,?,?,?,?,?,?,?,?,?)";
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setString(1,nom);
+                stmt.setInt(2,num);
+                stmt.setInt(3,fournisseur);
+                stmt.setInt(4,categorie);
+                stmt.setString(5,Quantite_Par_Unite);
+                stmt.setFloat(6,Prix_unitaire);
+                stmt.setInt(7,Unites_en_Stock);
+                stmt.setInt(8,Unites_commandees);
+                stmt.setInt(9,Niveau_de_reappro);
+                if( Unites_en_Stock > 0){
+                    stmt.setInt(10,0);
+                } else {
+                    stmt.setInt(10,1);
+                }
+                stmt.executeUpdate();
+            } catch(Exception e){
+                throw e;
+            }
+        }
+        
+        public void supprProduit(int reference)throws SQLException{
+            String sql = "DELETE FROM PRODUIT WHERE REFERENCE = ?";
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setInt(1, reference);
+                stmt.executeUpdate();   
+            } catch (Exception e){
+                throw e;
+            }
+        }
+        
 //	/**
 //	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
 //	 * @param code le code (non null)

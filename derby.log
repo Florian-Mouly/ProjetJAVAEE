@@ -1,13 +1,14 @@
+Wed Dec 11 15:25:22 CET 2019 : Apache Derby Network Server - 10.11.1.2 - (1629631) démarré et prêt à accepter les connexions sur le port 1527
 ----------------------------------------------------------------
-Tue Dec 03 14:17:52 CET 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-016e-cbe8-f561-000006af7380 
-on database directory D:\Users\damie\Desktop\Etudes\L3\TP\java_ee\projet\ProjetJAVAEE\comptoir_data with class loader sun.misc.Launcher$AppClassLoader@6bc7c054 
-Loaded from file:/C:/Users/damie/.m2/repository/org/apache/derby/derby/10.14.1.0/derby-10.14.1.0.jar
+Wed Dec 11 15:25:22 CET 2019:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631) : instance a816c00e-016e-f559-a188-00001b0fa257 
+dans le répertoire de base de données C:\Users\pedago\Documents\NetBeans\ProjetJAVAEE\sample avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1d44bcfa
+Chargé de file:/C:/Program%20Files/Java/jdk1.8.0_77/db/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_77-b03
-user.dir=C:\Users\pedago\Documents\NetBeans\ProjetJAVAEE
+user.dir=C:\Program Files\Java\jdk1.8.0_77\db
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
+derby.system.home=C:\Users\pedago\Documents\NetBeans\ProjetJAVAEE
+Chargeur de classe de la base de données démarré - derby.database.classpath = ''

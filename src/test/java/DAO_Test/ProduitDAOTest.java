@@ -65,4 +65,9 @@ public class ProduitDAOTest {
             result = myDAO.getProduit(reference);
             assertEquals(null, result);
         }
+        
+//        @Test
+//        public void testajoutProduit()throws SQLException{
+//            
+//        }
 }
