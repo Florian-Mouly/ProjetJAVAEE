@@ -4,9 +4,17 @@
         <servlet-name>AccueilServlet</servlet-name>
         <servlet-class>servlet.AccueilServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletConnexion</servlet-name>
+        <servlet-class>servlet.ServletConnexion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccueilServlet</servlet-name>
         <url-pattern>/AccueilServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletConnexion</servlet-name>
+        <url-pattern>/ServletConnexion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

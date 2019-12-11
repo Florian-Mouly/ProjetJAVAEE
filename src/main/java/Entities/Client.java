@@ -36,6 +36,11 @@ public class Client {
         this.Telephone=pf_telephne;
         this.Fax=pf_fax;
     }
+    
+    public Client(String pf_id, String pf_contact){
+        this.Code = pf_id;
+        this.Contact = pf_contact;
+    }
 
     public String getCode() {
         return Code;

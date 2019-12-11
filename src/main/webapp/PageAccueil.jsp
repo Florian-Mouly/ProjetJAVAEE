@@ -37,7 +37,7 @@
 		</div>
 
 		<div class="form-example">
-			<input type="submit" value="Se connecter !">
+			<input type="submit" value="Se connecter">
 		</div>
 		</form>
 	  </div>
