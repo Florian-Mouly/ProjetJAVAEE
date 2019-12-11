@@ -38,11 +38,11 @@ public class CommandeDAOTest {
 	 * Test of allCommande method, of class CommandeDAO.
 	 * @throws simplejdbc.SQLException
 	 */
-	/**@Test
+	@Test
 	public void testNumberOfCommand() throws SQLException{
 		List<Commande> result = myDAO.allCommande();
 		assertEquals(830, result.size());
-	/** }
+	}
         
         /**
 	 * Test of getCommande method, of class CommandeDAO.
@@ -149,16 +149,16 @@ public class CommandeDAOTest {
 	 * Test of addCommande method, of class CommandeDAO.
 	 * @throws simplejdbc.SQLException
 	 */
-	@Test
-	public void testaddCommande() throws SQLException{
-            
-            int resultAv = myDAO.allCommande().size();
-            Commande com=new Commande(1, "VINET", "2019-11-12", "2019-11-13",66.6 , "test", "test", "test", "test", "test", "test", 0.0);
-            myDAO.addCommande(com);
-            
-            int resultAp = myDAO.allCommande().size();
-            
-            assertEquals(resultAv+1,resultAp);
-	}
+//	@Test
+//	public void testaddCommande() throws SQLException{
+//            
+//            int resultAv = myDAO.allCommande().size();
+//            Commande com=new Commande(1, "VINET", "2019-11-12", "2019-11-13",66.6 , "test", "test", "test", "test", "test", "test", 0.0);
+//            myDAO.addCommande(com);
+//            
+//            int resultAp = myDAO.allCommande().size();
+//            
+//            assertEquals(resultAv+1,resultAp);
+//	}
         
 }
