@@ -61,7 +61,7 @@ public class CommandeDAOTest {
 	}
         
         /**
-	 * Test of allCommande method, of class CommandeDAO.
+	 * Test of NBCommandeParCateg method, of class CommandeDAO.
 	 * @throws simplejdbc.SQLException
 	 */
 	@Test
@@ -83,4 +83,65 @@ public class CommandeDAOTest {
             
             assertEquals(attendu, result);
 	}
+        
+        /**
+	 * Test of NBCommandeParPays method, of class CommandeDAO.
+	 * @throws simplejdbc.SQLException
+	 */
+	@Test
+	public void testNBCommandeParPays() throws SQLException{
+            String dateDeb="1994-01-01";
+            String dateFin="1995-01-01";
+            Map<String, Integer> attendu = new HashMap<String, Integer>();
+            
+            attendu.put("Allemagne", 22);
+            attendu.put("Autriche", 5);
+            attendu.put("Belgique", 2);
+            attendu.put("Brésil", 10);
+            attendu.put("Canada", 2);
+            attendu.put("Danemark", 2);
+            attendu.put("Espagne", 6);
+            attendu.put("Finlande", 4);
+            attendu.put("France", 14);
+            attendu.put("Irlande", 3);
+            attendu.put("Italie", 3);
+            attendu.put("Mexique", 9);
+            attendu.put("Portugal", 3);
+            attendu.put("Royaume-Uni", 7);
+            attendu.put("Suisse", 2);
+            attendu.put("Suède", 4);
+            attendu.put("Venezuela",6);
+            attendu.put("États-Unis",17);
+            
+            Map<String, Integer> result = myDAO.getNBCommandeParPays(dateDeb, dateFin);
+            
+            assertEquals(attendu, result);
+	}
+        
+        
+        /**
+	 * Test of NBCommandeParClient method, of class CommandeDAO.
+	 * @throws simplejdbc.SQLException
+	 */
+	@Test
+	public void testNBCommandeParClient() throws SQLException{
+            String dateDeb="1994-01-01";
+            String dateFin="1995-01-01";
+            Map<String, Integer> attendu = new HashMap<String, Integer>();
+            
+            attendu.put("Alejandra Camino", 3);
+            attendu.put("Alexander Feuer", 1);
+            attendu.put("Ana Trujillo", 1);
+            attendu.put("Paula Wilson", 6);
+            attendu.put("Yang Wang", 1);
+            
+            Map<String, Integer> result = myDAO.getNBCommandeParClient(dateDeb, dateFin);
+            
+            assertEquals(attendu.get("Alejandra Camino"), result.get("Alejandra Camino"));
+            assertEquals(attendu.get("Alexander Feuer"), result.get("Alexander Feuer"));
+            assertEquals(attendu.get("Ana Trujillo"), result.get("Ana Trujillo"));
+            assertEquals(attendu.get("Paula Wilson"), result.get("Paula Wilson"));
+            assertEquals(attendu.get("Yang Wang"), result.get("Yang Wang"));
+	}
+        
 }

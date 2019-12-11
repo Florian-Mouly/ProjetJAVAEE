@@ -100,6 +100,69 @@ public class CommandeDAO {
 		return result;
 	}
         
+        
+        /**
+	 * compte le nombre de commande par pays sur une page donnee
+         * @param dateDeb debut de la plage a rechercher
+         * @param dateFin fin de la plage a rechercher
+	 * @return tableau de in
+	 * @throws SQLException renvoyées par JDBC
+	 */
+	public Map<String, Integer> getNBCommandeParPays (String dateDeb, String dateFin) throws SQLException {
+
+		Map<String, Integer> result=new HashMap<String, Integer>();
+
+		String sql = "SELECT count(distinct Numero) as NB, C.PAYS as pays FROM Client C , Commande Co WHERE C.CODE=Co.CLIENT and Saisie_le between ? and ? group by C.PAYS";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setString(1, dateDeb);
+                        stmt.setString(2, dateFin);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int nb = rs.getInt("NB");
+				String cate = rs.getString("PAYS");
+				result.put(cate, nb);
+			}
+		}
+		return result;
+	}
+        
+        /**
+	 * compte le nombre de commande par client sur une page donnee
+         * @param dateDeb debut de la plage a rechercher
+         * @param dateFin fin de la plage a rechercher
+	 * @return tableau de in
+	 * @throws SQLException renvoyées par JDBC
+	 */
+	public Map<String, Integer> getNBCommandeParClient (String dateDeb, String dateFin) throws SQLException {
+
+		Map<String, Integer> result=new HashMap<String, Integer>();
+
+		String sql = "SELECT count(distinct Numero) as NB, C.CONTACT as nom FROM Client C , Commande Co WHERE C.CODE=Co.CLIENT and Saisie_le between ? and ? group by C.CONTACT";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setString(1, dateDeb);
+                        stmt.setString(2, dateFin);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int nb = rs.getInt("NB");
+				String cate = rs.getString("nom");
+				result.put(cate, nb);
+			}
+		}
+		return result;
+	}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 //	/**     
 //	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
 //	 * @param code le code (non null)
