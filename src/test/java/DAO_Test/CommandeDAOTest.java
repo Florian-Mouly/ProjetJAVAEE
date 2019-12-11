@@ -10,7 +10,9 @@ import DAO.CommandeDAO;
 import DAO.DataSourceFactory;
 import Entities.Commande;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.sql.DataSource;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -56,5 +58,29 @@ public class CommandeDAOTest {
                 commandeClient = "test";
                 result = myDAO.getCommande(commandeClient);
                 assertEquals(null, result);
+	}
+        
+        /**
+	 * Test of allCommande method, of class CommandeDAO.
+	 * @throws simplejdbc.SQLException
+	 */
+	@Test
+	public void testNBCommandeParCateg() throws SQLException{
+            String dateDeb="1994-01-01";
+            String dateFin="1995-01-01";
+            Map<String, Integer> attendu = new HashMap<String, Integer>();
+            
+            attendu.put("Boissons", 56);
+            attendu.put("Condiments", 28);
+            attendu.put("Desserts", 47);
+            attendu.put("Poissons et fruits de mer", 38);
+            attendu.put("Produit laitiers", 46);
+            attendu.put("Produit secs", 16);
+            attendu.put("Pâtes et céréales", 22);
+            attendu.put("Viandes", 27);
+            
+            Map<String, Integer> result = myDAO.getNBCommandeParCateg(dateDeb, dateFin);
+            
+            assertEquals(attendu, result);
 	}
 }

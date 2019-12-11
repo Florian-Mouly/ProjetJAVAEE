@@ -5,8 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.sql.DataSource;
 
 
@@ -71,6 +73,32 @@ public class CommandeDAO {
 		return result;
 	}
         
+        
+        /**
+	 * compte le nombre de commande par categorie sur une page donnee
+         * @param dateDeb debut de la plage a rechercher
+         * @param dateFin fin de la plage a rechercher
+	 * @return tableau de in
+	 * @throws SQLException renvoyées par JDBC
+	 */
+	public Map<String, Integer> getNBCommandeParCateg(String dateDeb, String dateFin) throws SQLException {
+
+		Map<String, Integer> result=new HashMap<String, Integer>();
+
+		String sql = "SELECT count(distinct Numero) as NB, Ca.LIBELLE as nom FROM Produit P , Categorie Ca, Commande Co, Ligne L WHERE Co.numero=L.commande and L.produit=P.reference and P.categorie=Ca.code and Saisie_le between ? and ? group by Ca.LIBELLE";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setString(1, dateDeb);
+                        stmt.setString(2, dateFin);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int nb = rs.getInt("NB");
+				String cate = rs.getString("nom");
+				result.put(cate, nb);
+			}
+		}
+		return result;
+	}
         
 //	/**     
 //	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
