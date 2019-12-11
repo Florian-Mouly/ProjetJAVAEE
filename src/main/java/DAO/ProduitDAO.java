@@ -42,6 +42,7 @@ public class ProduitDAO {
          */
         public List<Produit> allProduit() throws SQLException{
             List<Produit> result = new LinkedList<>();
+
             String sql = "SELECT * FROM Produit";
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -60,7 +61,10 @@ public class ProduitDAO {
                             Produit p = new Produit(Reference, Nom, Fournisseur, Categorie, Quantite_Par_Unite, Prix_unitaire, Unites_en_Stock, Unites_commandees, Niveau_de_reappro, Indisponible);
                             result.add(p);
 			}
-		}
+		}catch(SQLException e){
+                    throw  e;
+                }
+            
 		return result;
 	}
         

@@ -38,9 +38,11 @@ public class AccueilServlet extends HttpServlet {
 //            session.setAttribute("name", request.getParameter("name"));
 //            session.setAttribute("email", request.getParameter("email"));
 //        }
-        
-        list_produit = daoproduit.allProducts();//liste des produits
-        
+        try{
+        list_produit = daoproduit.allProduit() ;//liste des produits
+        }catch(SQLException e){
+            
+        }
         request.setAttribute("list_produit", list_produit);
         
         this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
