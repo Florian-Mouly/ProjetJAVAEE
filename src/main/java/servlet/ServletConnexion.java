@@ -51,7 +51,7 @@ public class ServletConnexion extends HttpServlet {
                     } else {
                         if(dao.getLogin(email,mdp)){
                             HttpSession session = request.getSession();
-                            session.setAttribute("pf_id", "mdp");
+                            session.setAttribute("email", "mdp");
                             response.sendRedirect("Nom page en tant que client ici");
                             
                         } else {

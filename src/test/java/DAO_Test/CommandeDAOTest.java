@@ -38,11 +38,11 @@ public class CommandeDAOTest {
 	 * Test of allCommande method, of class CommandeDAO.
 	 * @throws simplejdbc.SQLException
 	 */
-	@Test
+	/**@Test
 	public void testNumberOfCommand() throws SQLException{
 		List<Commande> result = myDAO.allCommande();
 		assertEquals(830, result.size());
-	}
+	/** }
         
         /**
 	 * Test of getCommande method, of class CommandeDAO.

@@ -32,12 +32,12 @@
 			 </div>
 
 		<div class="form-example">
-			<label for="email">Votre mot de passe </label>
+			<label for="mdp">Votre mot de passe </label>
 			 <input type="text" name="email" id="email" required>
 		</div>
 
 		<div class="form-example">
-			<input type="submit" value="Se connecter">
+			<input type="submit" name="action" value="Se connecter">
 		</div>
 		</form>
 	  </div>
