@@ -8,6 +8,18 @@
         <servlet-name>ServletConnexion</servlet-name>
         <servlet-class>servlet.ServletConnexion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>servlet.AdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChiffreAffaireClientServlet</servlet-name>
+        <servlet-class>servlet.ChiffreAffaireClientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllProduit</servlet-name>
+        <servlet-class>servlet.AllProduit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccueilServlet</servlet-name>
         <url-pattern>/AccueilServlet</url-pattern>
@@ -15,6 +27,18 @@
     <servlet-mapping>
         <servlet-name>ServletConnexion</servlet-name>
         <url-pattern>/ServletConnexion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/AdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChiffreAffaireClientServlet</servlet-name>
+        <url-pattern>/ChiffreAffaireClientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllProduit</servlet-name>
+        <url-pattern>/AllProduit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

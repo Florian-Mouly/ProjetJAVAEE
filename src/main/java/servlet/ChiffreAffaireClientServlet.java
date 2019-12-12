@@ -5,22 +5,25 @@
  */
 package servlet;
 
-import DAO.DataSourceFactory;
-import DAO.LoginDAO;
+import DAO.CommandeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.util.Collections;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.util.Properties;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Quentin
  */
-public class ServletConnexion extends HttpServlet {
+@WebServlet(name = "ChiffreAffaireClientServlet", urlPatterns = {"/ChiffreAffaireClientServlet"})
+public class ChiffreAffaireClientServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,44 +36,32 @@ public class ServletConnexion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
-        String email = request.getParameter("email");
-        String mdp = request.getParameter("mdp");
-        String views ="PageAccueil.jsp";
-        System.out.print(action);
-        try{
-            LoginDAO dao = new LoginDAO(DataSourceFactory.getDataSource());
-            switch (action) {
-		case "Se connecter":
-                    System.out.println(email + "     " + mdp);
-                    if(dao.isAdmin(email, mdp)){
-                        HttpSession session = request.getSession();
-                        session.setAttribute("admin", "admin");
-                        response.sendRedirect("");
-                    } else {
-                        if(dao.getLogin(email,mdp)){
-                            HttpSession session = request.getSession();
-                            session.setAttribute("email", "mdp");
-                            response.sendRedirect("");
-                            
-                        } else {
-                            request.setAttribute("error_message", "Mauvais identifiant");
-                            request.getRequestDispatcher(views).forward(request, response);
-                        }
-                        
-                    }
-                    break;
-                
-            }
-            
-            
-        }catch (IOException | SQLException | ServletException ex) {
-            request.setAttribute("error_message", "Identifiant/Mot de passe invalide");
-            request.getRequestDispatcher(views).forward(request, response);
-        }
         
-    
+                response.setContentType("text/html;charset=UTF-8");
+                CommandeDAO produit = (CommandeDAO) getServletContext().getAttribute("produit");
+		Properties resultat = new Properties();
+     
+                String dateD = request.getParameter("dateDebut");
+                String dateF = request.getParameter("dateFin");
+		
+                try {
+                    resultat.put("records", produit.totalForCustomer(dateD, dateF));
+                     
+		} catch (Exception  ex) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			resultat.put("records", Collections.EMPTY_LIST);
+			resultat.put("message", ex.getMessage());
+		}
+
+		try (PrintWriter out = response.getWriter()) {
+			// On spécifie que la servlet va générer du JSON
+			response.setContentType("application/json;charset=UTF-8");
+
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String gsonData = gson.toJson(resultat);
+			out.println(gsonData);
+            
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
