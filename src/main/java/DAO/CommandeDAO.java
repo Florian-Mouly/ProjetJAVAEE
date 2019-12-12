@@ -199,7 +199,7 @@ public class CommandeDAO {
         
          public HashMap totalForCustomer(String date1, String date2) throws Exception{
             String sql="SELECT NAME, SUM(SHIPPING_COST+PURCHASE_COST * QUANTITY) AS TOTAL FROM CUSTOMER INNER JOIN PURCHASE_ORDER USING (CUSTOMER_ID) INNER JOIN PRODUCT ON PRODUCT.PRODUCT_ID=PURCHASE_ORDER.PRODUCT_ID AND (PURCHASE_ORDER.SALES_DATE BETWEEN ? AND ?) GROUP BY NAME";
-            HashMap<String,Float> client = new HashMap<>();
+            HashMap<String,Integer> client = new HashMap<>();
             
              try (Connection connection = myDataSource.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql)){
@@ -208,7 +208,7 @@ public class CommandeDAO {
 		try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) { 
 			String id =rs.getString("NAME");
-                        float mel = rs.getFloat("TOTAL");
+                        int mel = rs.getInt("SHIPPING_COST");
                         client.put(id, mel);
                     }
 		}

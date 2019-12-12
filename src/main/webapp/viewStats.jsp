@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <!-- On charge JQuery -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -105,17 +105,15 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <div style="background-color:#00BFFF;padding:5px;text-align:center">
+        <div style="background-color:lightgray ;padding:5px;text-align:center">
         
         <h1> ADMINISTRATEUR </h1>
     </div>
     <div class="navbar" style="width: 100%;background-color: #555;overflow:auto;" >
-        <a  onclick="disconnect()" href="#" name="home"> Home</a>
-        <a name="client"> Client</a> 
+        <button type="button" class="btn btn-primary"><a  style="text-decoration:none;color: black;" onclick="disconnect()" href="#" name="home"> Acceuil</a></button>
         <div class="dropdown" >
-            <button class="dropbtn">Admin</button>
             <div class="dropdown-content">
-              <a href="#" onclick="afficherGraphiques()">Graphiques</a>
+                <button type="button" class="btn btn-light"><a style="text-decoration:none; color: black;" href="#" onclick="afficherGraphiques()">Graphiques</a></button>
             </div>
             
         </div>

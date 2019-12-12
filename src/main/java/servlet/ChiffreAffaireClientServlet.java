@@ -38,18 +38,17 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
             throws ServletException, IOException {
         
                 response.setContentType("text/html;charset=UTF-8");
-                CommandeDAO produit = (CommandeDAO) getServletContext().getAttribute("produit");
+                CommandeDAO commande = (CommandeDAO) getServletContext().getAttribute("produit");
 		Properties resultat = new Properties();
      
                 String dateD = request.getParameter("dateDebut");
                 String dateF = request.getParameter("dateFin");
 		
                 try {
-                    resultat.put("records", produit.totalForCustomer(dateD, dateF));
+                    resultat.put("records", commande.totalForCustomer(dateD, dateF));
                      
 		} catch (Exception  ex) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			resultat.put("records", Collections.EMPTY_LIST);
 			resultat.put("message", ex.getMessage());
 		}
 
