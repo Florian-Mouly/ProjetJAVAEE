@@ -43,6 +43,7 @@ public class AccueilServlet extends HttpServlet {
         }catch(SQLException e){
             
         }
+
         request.setAttribute("list_produit", list_produit);
         
         this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);

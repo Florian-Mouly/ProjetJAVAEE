@@ -22,6 +22,7 @@
 					<div class ="nav">
 						<p id="connexion">
 		<button data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" " type="button" id="butconnexion" class="btn btn-outline-warning"> <a style="text-decoration: none; color: red; "> Connexion </a> </button>
+
 		</button>
 	  </p>
 	  <div class="collapse" id="collapseExample">
@@ -33,11 +34,13 @@
 
 		<div class="form-example">
 			<label for="mdp">Votre mot de passe </label>
+
 			 <input type="text" name="email" id="email" required>
 		</div>
 
 		<div class="form-example">
 			<input type="submit" name="action" value="Se connecter">
+
 		</div>
 		</form>
 	  </div>
@@ -57,7 +60,7 @@
                       <button style="float:right; position: relative; top:300px; right: 3px;"   type="button" class="btn btn-success"><i class="fas fa-cart-arrow-down"></i></button>
                          
                      <c:out value="${ produit.getNom() }"  /></p>
-                     
+
 
 
                     </c:forEach>
