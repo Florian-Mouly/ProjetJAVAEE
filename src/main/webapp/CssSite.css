@@ -1,7 +1,7 @@
 
 #connexion{
     position: relative;
-    left: auto;
+    margin-left: auto;
 }
 
 #navigation{
@@ -11,10 +11,13 @@
 }
 
 #lesproduits{
-    width: 350px;
-    height: 420px;
+    width: 320px;
+    height: 350px;
     border: 5px solid black;
     display: inline-block;
+    text-align:center;
+    position:relative;
+    margin-left:45px;    
 
 }
 

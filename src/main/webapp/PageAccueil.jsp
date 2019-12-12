@@ -20,8 +20,8 @@
 			<div class="row" id="navigation">
 				<div class ="col">
 					<div class ="nav">
-						<p>
-		<button data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" " type="button" id="connexion" class="btn btn-outline-warning"> <a style="text-decoration: none; color: red; "> Connexion </a> </button>
+						<p id="connexion">
+		<button data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" " type="button" id="butconnexion" class="btn btn-outline-warning"> <a style="text-decoration: none; color: red; "> Connexion </a> </button>
 		</button>
 	  </p>
 	  <div class="collapse" id="collapseExample">
@@ -48,16 +48,15 @@
        
            <div class="row" style="background-color:cornsilk;width: 101%" id="vitrine_site">
                <div class="col">
-                <p>Les Produits : ${list_produit}</p>
         
                     <c:forEach items="${ list_produit}" var="produit" varStatus="status">
                         
-                     <p id="lesproduits">
+                     <p id="lesproduits" style="background-repeat: no-repeat; background-size: 210px; background-position-x: center; background-position-y:center; background-image :url('indisponible.png')">
                          
-                      <button type="button" class="btn btn-success">+</button>
-                      <button type="button" class="btn btn-danger">-</button>
+
+                      <button style="float:right; position: relative; top:300px; right: 3px;"   type="button" class="btn btn-success"><i class="fas fa-cart-arrow-down"></i></button>
                          
-                         N°<c:out value="${ produit.getNom() }" />!</p>
+                     <c:out value="${ produit.getNom() }"  /></p>
                      
 
 
