@@ -21,21 +21,21 @@
 				<div class ="col">
 					<div class ="nav">
 						<p id="connexion">
-		<button data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" " type="button" id="butconnexion" class="btn btn-outline-warning"> <a style="text-decoration: none; color: red; "> Connexion </a> </button>
+		<button data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"type="button" id="butconnexion" class="btn btn-outline-warning"> <a style="text-decoration: none; color: red; "> Connexion </a> </button>
 
-		</button>
+
 	  </p>
 	  <div class="collapse" id="collapseExample">
 		<form  action="" method="post" class="form-connexion">
 			<div class="form-example">
 				<label for="name">Votre login </label>
-				<input type="text" name="name" id="name" required>
+				<input type="text" name="email" id="email" required>
 			 </div>
 
 		<div class="form-example">
 			<label for="mdp">Votre mot de passe </label>
 
-			 <input type="text" name="email" id="email" required>
+			 <input type="password" name="mdp" id="mdp" required>
 		</div>
 
 		<div class="form-example">

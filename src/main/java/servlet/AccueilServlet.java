@@ -87,7 +87,12 @@ public class AccueilServlet extends HttpServlet {
 //            session.setAttribute("name", request.getParameter("name"));
 //            session.setAttribute("email", request.getParameter("email"));
 //        }
-
+        String id = request.getParameter("email");
+        String mdp = request.getParameter("mdp");
+        
+        if((id.equals("admin"))&&(mdp.equals("admin"))){
+            this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
+        }
         String cate = request.getParameter("formC");
         System.out.println("____________________________________________________________________________________________________________________________________________________ "+ cate);
         
