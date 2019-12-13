@@ -5,24 +5,23 @@
  */
 package servlet;
 
-import DAO.DataSourceFactory;
-import DAO.LoginDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Quentin
  */
-public class ServletConnexion extends HttpServlet {
+@WebServlet(name = "adminServlet", urlPatterns = {"/adminServlet"})
+public class AdminServlet extends HttpServlet {
 
     /**
+     * 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -34,43 +33,23 @@ public class ServletConnexion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+         String views = "/Views/viewStats.jsp";
         String action = request.getParameter("action");
-        String email = request.getParameter("email");
-        String mdp = request.getParameter("mdp");
-        String views ="PageAccueil.jsp";
-        System.out.print(action);
-        try{
-            LoginDAO dao = new LoginDAO(DataSourceFactory.getDataSource());
-            switch (action) {
-		case "Se connecter":
-                    System.out.println(email + "     " + mdp);
-                    if(dao.isAdmin(email, mdp)){
-                        HttpSession session = request.getSession();
-                        session.setAttribute("admin", "admin");
-                        response.sendRedirect("");
-                    } else {
-                        if(dao.getLogin(email,mdp)){
-                            HttpSession session = request.getSession();
-                            session.setAttribute("email", "mdp");
-                            response.sendRedirect("");
-                            
-                        } else {
-                            request.setAttribute("error_message", "Mauvais identifiant");
-                            request.getRequestDispatcher(views).forward(request, response);
-                        }
-                        
-                    }
-                    break;
-                
-            }
-            
-            
-        }catch (IOException | SQLException | ServletException ex) {
-            request.setAttribute("error_message", "Identifiant/Mot de passe invalide");
-            request.getRequestDispatcher(views).forward(request, response);
-        }
+        action = (action == null ) ? "" : action;
+        System.out.println(action);
         
-    
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AdminServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AdminServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

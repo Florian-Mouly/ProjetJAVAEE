@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 
@@ -215,5 +217,74 @@ public class CommandeDAO {
 		return result;
 	}
         
+        
+         public HashMap totalForCustomer(String date1, String date2) throws Exception{
+            String sql="SELECT NAME, SUM(SHIPPING_COST+PURCHASE_COST * QUANTITY) AS TOTAL FROM CUSTOMER INNER JOIN PURCHASE_ORDER USING (CUSTOMER_ID) INNER JOIN PRODUCT ON PRODUCT.PRODUCT_ID=PURCHASE_ORDER.PRODUCT_ID AND (PURCHASE_ORDER.SALES_DATE BETWEEN ? AND ?) GROUP BY NAME";
+            HashMap<String,Integer> client = new HashMap<>();
+            
+             try (Connection connection = myDataSource.getConnection();
+		PreparedStatement stmt = connection.prepareStatement(sql)){
+                stmt.setString(1, date1);
+                stmt.setString(2, date2);
+		try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) { 
+			String id =rs.getString("NAME");
+                        int mel = rs.getInt("SHIPPING_COST");
+                        client.put(id, mel);
+                    }
+		}
+                return client;
+            }
+            
+            catch (SQLException ex) {
+		Logger.getLogger("CommandeDAO").log(Level.SEVERE, null, ex);
+		throw new Exception(ex.getMessage());
+            }    
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//	/**     
+//	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
+//	 * @param code le code (non null)
+//	 * @param rate le taux (positive or 0)
+//	 * @return 1 si succès, 0 sinon
+//	 * @throws SQLException renvoyées par JDBC
+//	 */
+//	public int addDiscountCode(String code, float rate) throws SQLException {
+//		int result = 0;
+//		String sql = "INSERT INTO DISCOUNT_CODE VALUES (?, ?)";
+//		try (Connection connection = myDataSource.getConnection(); 
+//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+//			stmt.setString(1, code);
+//			stmt.setFloat(2, rate);
+//			result = stmt.executeUpdate();
+//		}
+//		return result;
+//	}
+//
+//		
+//	/**
+//	 * Supprime un enregistrement dans la table DISCOUNT_CODE
+//	 * @param code la clé de l'enregistrement à supprimer
+//	 * @return le nombre d'enregistrements supprimés (1 ou 0)
+//	 * @throws java.sql.SQLException renvoyées par JDBC
+//	 **/
+//	public int deleteDiscountCode(String code) throws SQLException {
+//		int result = 0;
+//		String sql = "DELETE FROM DISCOUNT_CODE WHERE DISCOUNT_CODE = ?";
+//		try (Connection connection = myDataSource.getConnection(); 
+//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+//			stmt.setString(1, code);
+//			result = stmt.executeUpdate();
+//		}
+//		return result;
+//	}
         
 }
