@@ -68,6 +68,43 @@ public class ProduitDAOTest {
         
 //        @Test
 //        public void testajoutProduit()throws SQLException{
-//            
+//            try{
+//                myDAO.ajoutProduit("test", 666, 0, 1, "test", 0, 0, 0, 0, 0);
+//            }catch(Exception e){
+//                fail("ajout impossible");
+//            }
 //        }
+//        
+//        @Test
+//        public void testspprProduit()throws SQLException{
+//            try{
+//                List<Produit> nba = myDAO.getProduitByCategorie(1);
+//                myDAO.supprProduit(78);
+//                List<Produit> nbp = myDAO.getProduitByCategorie(1);
+//                assertEquals(nbp.size(), nba.size()-1);
+//            }catch(Exception e){
+//                fail("suppression impossible");
+//            }
+//        }
+        
+        @Test
+        public void testupdateProduit()throws SQLException{
+            try{
+                myDAO.ajoutProduit("test", 78, 0, 1, "test", 0, 0, 0, 0, 0);
+                myDAO.updateProduit("testeu", 78, 0, 1, "test", 0, 0, 0, 0, 0);
+            }catch(Exception e){
+                fail("update impossible");
+            }
+        }
+        
+        @Test
+        public void testgetproduitByCategorie() throws SQLException {
+            //exist
+            int cate = 1;
+            List<Produit> result = myDAO.getProduitByCategorie(cate);
+            assertEquals(12, result.size());
+            
+        }
+        
+        
 }

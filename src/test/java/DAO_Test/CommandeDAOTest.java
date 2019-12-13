@@ -161,4 +161,25 @@ public class CommandeDAOTest {
 //            assertEquals(resultAv+1,resultAp);
 //	}
         
+        
+        /**
+	 * Test of NBCommandeParPays method, of class CommandeDAO.
+	 * @throws simplejdbc.SQLException
+	 */
+	@Test
+	public void testNBAllCommandeParPays() throws SQLException{
+            Map<String, Integer> attendu = new HashMap<String, Integer>();
+            
+            attendu.put("ALFKI", 4);
+            attendu.put("AROUT", 14);
+            attendu.put("COMMI", 5);
+            attendu.put("WARTH", 15);
+            Map<String, Integer> result = myDAO.getNBAllCommandeParClient();
+            
+            assertEquals(attendu.get("ALFKI"), result.get("ALFKI"));
+            assertEquals(attendu.get("AROUT"), result.get("AROUT"));
+            assertEquals(attendu.get("COMMI"), result.get("COMMI"));
+            assertEquals(attendu.get("WARTH"), result.get("WARTH"));
+	}
+        
 }
