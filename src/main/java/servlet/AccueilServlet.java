@@ -5,6 +5,7 @@ import DAO.ClientDAO;
 import Entities.Client;
 import DAO.DataSourceFactory;
 import DAO.ProduitDAO;
+import Entities.Categorie;
 import Entities.Produit;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,7 +28,9 @@ public class AccueilServlet extends HttpServlet {
     
     private static DataSource dataSource = DataSourceFactory.getDataSource();
     public List<Produit> list_produit;
+    public List<Categorie> list_categorie;
     ProduitDAO  daoproduit = new ProduitDAO(dataSource);
+    CategorieDAO  daocategorie = new CategorieDAO(dataSource);
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException{
@@ -38,13 +41,76 @@ public class AccueilServlet extends HttpServlet {
 //            session.setAttribute("name", request.getParameter("name"));
 //            session.setAttribute("email", request.getParameter("email"));
 //        }
-        try{
-        list_produit = daoproduit.allProduit() ;//liste des produits
-        }catch(SQLException e){
+
+        String cate = request.getParameter("categories");
+        System.out.println("____________________________________________________________________________________________________________________________________________________ "+ cate);
+        if (cate!=null){
+            if(cate=="0"){
+                try{
+                    list_produit = daoproduit.allProduit(); //liste des produits
+                    list_categorie= daocategorie.allCategorie(); //liste des categories
+                }catch(SQLException e){
+
+                }
+            }else{
+                try{
+                    list_produit = daoproduit.getProduitByCategorie(Integer.parseInt(cate)) ;//liste des produits de la categorie
+                    list_categorie= daocategorie.allCategorie(); //liste des categories
+                }catch(SQLException e){
+
+                }
+            }
+        }else{
+
+
+            try{
+                list_produit = daoproduit.allProduit() ;//liste des produits
+                list_categorie= daocategorie.allCategorie(); //liste des categories
+            }catch(SQLException e){
+
+            }
+
             
         }
+        request.setAttribute("list_produit", list_produit);
+        request.setAttribute("list_categorie", list_categorie);
+        
+        this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
+    }
+    
+    protected void processPostRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException{
+        
+        
+//        if(!request.getParameter("name").isEmpty() && !request.getParameter("email").isEmpty()){
+//            HttpSession session = request.getSession();
+//            session.setAttribute("name", request.getParameter("name"));
+//            session.setAttribute("email", request.getParameter("email"));
+//        }
+
+        String cate = request.getParameter("formC");
+        System.out.println("____________________________________________________________________________________________________________________________________________________ "+ cate);
+        
+        if(cate=="0"){
+            try{
+                list_produit = daoproduit.allProduit(); //liste des produits
+                list_categorie= daocategorie.allCategorie(); //liste des categories
+            }catch(SQLException e){
+
+            }
+        }else{
+            try{
+                list_produit = daoproduit.getProduitByCategorie(Integer.parseInt(cate)) ;//liste des produits de la categorie
+                list_categorie= daocategorie.allCategorie(); //liste des categories
+            }catch(SQLException e){
+
+            }
+        }
+        
+        
 
         request.setAttribute("list_produit", list_produit);
+        request.setAttribute("list_categorie", list_categorie);
         
         this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
     }
@@ -59,7 +125,7 @@ public class AccueilServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processPostRequest(request, response);
 
     }
 

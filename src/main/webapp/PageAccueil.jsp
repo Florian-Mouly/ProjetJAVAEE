@@ -46,10 +46,29 @@
 	  </div>
             </div>
 					</div>
+                            
 				</div>
+            
 			</div>
-       
+        
+        
+            <div align="center">
+                <form method="get" id="formC">
+                    <select name="categories" id="categorie-select">
+                        <option id="cate" value="0">Tous les produis</option>
+                        <c:forEach items="${ list_categorie}" var="categorie">
+                            <option id="cate" value="${categorie.getCode()}">${categorie.getLibelle()}</option>
+                        </c:forEach>
+                    </select>
+                     
+                        
+                    <input type="submit"  value="Rechercher"></input>
+                </form>
+            </div>
+        
+        
            <div class="row" style="background-color:cornsilk;width: 101%" id="vitrine_site">
+               
                <div class="col">
         
                     <c:forEach items="${ list_produit}" var="produit" varStatus="status">

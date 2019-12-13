@@ -87,15 +87,15 @@ public class ProduitDAOTest {
 //            }
 //        }
         
-        @Test
-        public void testupdateProduit()throws SQLException{
-            try{
-                myDAO.ajoutProduit("test", 78, 0, 1, "test", 0, 0, 0, 0, 0);
-                myDAO.updateProduit("testeu", 78, 0, 1, "test", 0, 0, 0, 0, 0);
-            }catch(Exception e){
-                fail("update impossible");
-            }
-        }
+//        @Test
+//        public void testupdateProduit()throws SQLException{
+//            try{
+//                myDAO.ajoutProduit("test", 78, 0, 1, "test", 0, 0, 0, 0, 0);
+//                myDAO.updateProduit("testeu", 78, 0, 1, "test", 0, 0, 0, 0, 0);
+//            }catch(Exception e){
+//                fail("update impossible");
+//            }
+//        }
         
         @Test
         public void testgetproduitByCategorie() throws SQLException {
