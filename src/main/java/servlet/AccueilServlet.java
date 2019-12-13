@@ -45,7 +45,7 @@ public class AccueilServlet extends HttpServlet {
         String cate = request.getParameter("categories");
         System.out.println("____________________________________________________________________________________________________________________________________________________ "+ cate);
         if (cate!=null){
-            if(cate=="0"){
+            if(cate.equals("0")){
                 try{
                     list_produit = daoproduit.allProduit(); //liste des produits
                     list_categorie= daocategorie.allCategorie(); //liste des categories
