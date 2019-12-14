@@ -29,8 +29,10 @@ public class AccueilServlet extends HttpServlet {
     private static DataSource dataSource = DataSourceFactory.getDataSource();
     public List<Produit> list_produit;
     public List<Categorie> list_categorie;
+    public List<Client> list_client;
     ProduitDAO  daoproduit = new ProduitDAO(dataSource);
     CategorieDAO  daocategorie = new CategorieDAO(dataSource);
+    ClientDAO daoclient = new ClientDAO(dataSource);
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException{
@@ -79,7 +81,7 @@ public class AccueilServlet extends HttpServlet {
     }
     
     protected void processPostRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException{
+        throws ServletException, IOException, SQLException{
         
         
 //        if(!request.getParameter("name").isEmpty() && !request.getParameter("email").isEmpty()){
@@ -92,6 +94,17 @@ public class AccueilServlet extends HttpServlet {
         
         if((id.equals("admin"))&&(mdp.equals("admin"))){
             this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
+        } else {
+            if(daoclient.getClient(id) != null){
+                Client test = daoclient.getClient(id);
+                if ((test.getContact().equals(id))&&(test.getCode().equals(mdp))){
+                    this.getServletContext().getRequestDispatcher("/personalData.jsp").forward(request, response);
+                } else {
+                    this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
+                }
+            } else {
+                this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
+            }
         }
         String cate = request.getParameter("formC");
         System.out.println("____________________________________________________________________________________________________________________________________________________ "+ cate);
@@ -130,7 +143,11 @@ public class AccueilServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processPostRequest(request, response);
+        try {
+            processPostRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccueilServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
