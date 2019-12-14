@@ -26,13 +26,13 @@ public class LoginDAO {
     }
       
        public boolean getLogin(String email, String pf_id) throws SQLException{//Si les paramètres de login sont vérifies return le customer
-       
-        String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID="+pf_id;
+       // pf_id doit etre un char j'ai mit String pour pas que t'es une erreur
+            String sql = "SELECT * FROM CLIENT WHERE CODE="+pf_id;  // La sa casse les couille normalement c'est WHERE CODE='le code du client' Mais impossible de mettre des ' 
 		try (Connection connection = ds.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-                            String mail = rs.getString("EMAIL");
+                            String mail = rs.getString("CONTACT");
                             if(email.equals(mail)){//Si les identifiants sont exact on rempli le customer
                                 return true;
                             }

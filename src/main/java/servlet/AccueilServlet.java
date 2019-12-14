@@ -4,6 +4,7 @@ import DAO.CategorieDAO;
 import DAO.ClientDAO;
 import Entities.Client;
 import DAO.DataSourceFactory;
+import DAO.LoginDAO;
 import DAO.ProduitDAO;
 import Entities.Categorie;
 import Entities.Produit;
@@ -79,7 +80,7 @@ public class AccueilServlet extends HttpServlet {
     }
     
     protected void processPostRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException{
+        throws ServletException, IOException, SQLException{
         
         
 //        if(!request.getParameter("name").isEmpty() && !request.getParameter("email").isEmpty()){
@@ -87,12 +88,25 @@ public class AccueilServlet extends HttpServlet {
 //            session.setAttribute("name", request.getParameter("name"));
 //            session.setAttribute("email", request.getParameter("email"));
 //        }
-        String id = request.getParameter("email");
-        String mdp = request.getParameter("mdp");
+        String email = request.getParameter("email");
+        String  mdp = request.getParameter("mdp");
         
-        if((id.equals("admin"))&&(mdp.equals("admin"))){
-            this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
-        }
+               
+            LoginDAO dao = new LoginDAO(DataSourceFactory.getDataSource());
+            if((email.equals("admin"))&&(mdp.equals("admin"))){
+                this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
+            } else {
+                    if(dao.getLogin(email, mdp)){
+                        HttpSession ses = request.getSession();
+                        ses.setAttribute("customer_id", mdp);
+                        response.sendRedirect("/personalData.jsp");
+                    
+                } else {
+                        request.setAttribute("error_message", "Client non reconnu");
+                        request.getRequestDispatcher("/PageAccueil.jsp").forward(request,response);
+                        }
+        
+        
         String cate = request.getParameter("formC");
         System.out.println("____________________________________________________________________________________________________________________________________________________ "+ cate);
         
@@ -120,6 +134,8 @@ public class AccueilServlet extends HttpServlet {
         this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
     }
 
+          
+    }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -130,7 +146,11 @@ public class AccueilServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processPostRequest(request, response);
+        try {
+            processPostRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccueilServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
