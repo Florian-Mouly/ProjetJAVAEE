@@ -15,7 +15,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
         <title>JSP Page</title>
     </head>
-    <body>
+    <body style="background-color: #313131">
         
         <script>
             function enrformtest(){
@@ -51,7 +51,14 @@
                }
         </script>
         
-        <div class="row">
+          <div class="container-fluid" style="background-color: #D6D4D4;">
+			<div class="row" id="navigation" style="height:75px">
+                            <div class ="col">
+                                
+                            </div>
+                        </div>
+          </div>
+        <div class="row" style="margin:auto; width:90vh; margin-top:80px; padding:15px; border: 2px solid #E1E1E1; background-color: #A6A7CA;">
             <div class="col">
             <form  >
                 <div class="form-row">
@@ -79,8 +86,7 @@
                     </div>
                  </div>
                 </div>
-              </div>
-            <div class="form-row">
+            <div class="form-row" style="margin:auto; width:90vh;">
                 <div class="form-group col-md-6">
                     <label for="inputCity">Ville</label>
                     <input id="modif6" type="text" class="form-control">
@@ -100,6 +106,5 @@
 
    </form>
             </div>
-        </div>
     </body>
 </html>
