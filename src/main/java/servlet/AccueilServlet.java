@@ -4,7 +4,6 @@ import DAO.CategorieDAO;
 import DAO.ClientDAO;
 import Entities.Client;
 import DAO.DataSourceFactory;
-import DAO.LoginDAO;
 import DAO.ProduitDAO;
 import Entities.Categorie;
 import Entities.Produit;
@@ -30,8 +29,10 @@ public class AccueilServlet extends HttpServlet {
     private static DataSource dataSource = DataSourceFactory.getDataSource();
     public List<Produit> list_produit;
     public List<Categorie> list_categorie;
+    public List<Client> list_client;
     ProduitDAO  daoproduit = new ProduitDAO(dataSource);
     CategorieDAO  daocategorie = new CategorieDAO(dataSource);
+    ClientDAO daoclient = new ClientDAO(dataSource);
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException{
@@ -88,25 +89,23 @@ public class AccueilServlet extends HttpServlet {
 //            session.setAttribute("name", request.getParameter("name"));
 //            session.setAttribute("email", request.getParameter("email"));
 //        }
-        String email = request.getParameter("email");
-        String  mdp = request.getParameter("mdp");
+        String id = request.getParameter("email");
+        String mdp = request.getParameter("mdp");
         
-               
-            LoginDAO dao = new LoginDAO(DataSourceFactory.getDataSource());
-            if((email.equals("admin"))&&(mdp.equals("admin"))){
-                this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
-            } else {
-                    if(dao.getLogin(email, mdp)){
-                        HttpSession ses = request.getSession();
-                        ses.setAttribute("customer_id", mdp);
-                        response.sendRedirect("/personalData.jsp");
-                    
+        if((id.equals("admin"))&&(mdp.equals("admin"))){
+            this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
+        } else {
+            if(daoclient.getClient(id) != null){
+                Client test = daoclient.getClient(id);
+                if ((test.getContact().equals(id))&&(test.getCode().equals(mdp))){
+                    this.getServletContext().getRequestDispatcher("/personalData.jsp").forward(request, response);
                 } else {
-                        request.setAttribute("error_message", "Client non reconnu");
-                        request.getRequestDispatcher("/PageAccueil.jsp").forward(request,response);
-                        }
-        
-        
+                    this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
+                }
+            } else {
+                this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
+            }
+        }
         String cate = request.getParameter("formC");
         System.out.println("____________________________________________________________________________________________________________________________________________________ "+ cate);
         
@@ -134,8 +133,6 @@ public class AccueilServlet extends HttpServlet {
         this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
     }
 
-          
-    }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
