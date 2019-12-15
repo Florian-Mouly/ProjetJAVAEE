@@ -63,10 +63,10 @@
                 nomod4.removeAttribute("disabled");
                 nomod5.removeAttribute("disabled");
                 nomod6.removeAttribute("disabled");
-                nomod7.setAttribute("disabled");
-                nomod8.setAttribute("disabled");
-                nomod9.setAttribute("disabled");
-                nomod10.setAttribute("disabled");
+                nomod7.removeAttribute("disabled");
+                nomod8.removeAttribute("disabled");
+                nomod9.removeAttribute("disabled");
+                nomod10.removeAttribute("disabled");
                }
         </script>
         
@@ -84,51 +84,52 @@
                     <div class="form-group col-md-6" >
                         
                         <label  for="inputEmail4">Contact</label>
-                        <input  type="email" class="form-control" id="modif" value="${clientCourant.getContact()}">
+                        <input  name="Contact" type="email" class="form-control" id="modif" value="${clientCourant.getContact()}">
                      </div> 
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">Société</label>
-                        <input type="text" class="form-control" id="modif2" value="${clientCourant.getSociete()}">
+                        <input name="Societe" type="text" class="form-control" id="modif2" value="${clientCourant.getSociete()}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputAddress">Fonction</label>
-                    <input type="text" class="form-control" id="modif3" value="${clientCourant.getFonction()}">
+                    <label for="inputFonction">Fonction</label>
+                    <input name="Fonction" type="text" class="form-control" id="modif3" value="${clientCourant.getFonction()}">
                 </div>
               <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="inputAddress2">Adresse</label>
-                    <input id="modif4" type="text" class="form-control"  value="${clientCourant.getAdresse()}">
+                    <label for="inputAddress">Adresse</label>
+                    <input name="Adresse" id="modif4" type="text" class="form-control"  value="${clientCourant.getAdresse()}">
                 </div>
                     <div class="form-group col-md-4">
                     <label for="inputCity">Ville</label>
-                    <input id="modif5" type="text" class="form-control" value="${clientCourant.getVille()}">
+                    <input name="Ville" id="modif5" type="text" class="form-control" value="${clientCourant.getVille()}">
                     </div>
                </div>
             <div class="form-row" style="margin:auto; width:80vh;">
                 <div class="form-group col-md-4">
-                    <label for="inputCity">Region</label>
-                    <input id="modif6" type="text" class="form-control" value="${clientCourant.getRegion()}">
+                    <label for="inputRegion">Region</label>
+                    <input name="Region" id="modif6" type="text" class="form-control" value="${clientCourant.getRegion()}">
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputCity">Code Postal</label>
-                    <input id="modif7" type="text" class="form-control" value="${clientCourant.getCode_Postal()}">
+                    <label for="inputCP">Code Postal</label>
+                    <input name="Code_Postal" id="modif7" type="text" class="form-control" value="${clientCourant.getCode_Postal()}">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputCity">Pays</label>
-                    <input id="modif8" type="text" class="form-control" value="${clientCourant.getPays()}">
+                    <label for="inputPays">Pays</label>
+                    <input name="Pays" id="modif8" type="text" class="form-control" value="${clientCourant.getPays()}">
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputCity">Telephone</label>
-                    <input id="modif9" type="text" class="form-control" value="${clientCourant.getTelephone()}">
+                    <label for="inputTelephone">Telephone</label>
+                    <input name="Telephone" id="modif9" type="text" class="form-control" value="${clientCourant.getTelephone()}">
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputCity">FAX</label>
-                    <input id="modif10" type="text" class="form-control" value="${clientCourant.getFax()}">
+                    <label for="inputFax">FAX</label>
+                    <input name="Fax" id="modif10" type="text" class="form-control" value="${clientCourant.getFax()}">
                 </div>
             </div>
                 <button   type="button" class="btn btn-dark" ><a onclick='enrformtest()'>Enregistrer</a></button>
                 <button type="button" class="btn btn-outline-dark" onclick="modifformtest()" >Modifier</button>
+                <button type="submit" class="btn" name="action" value="Envoyer">Envoyer</button>
             </form>
             </div>
         </div>

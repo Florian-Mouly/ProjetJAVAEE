@@ -52,6 +52,29 @@ public class personalDataServlet extends HttpServlet {
         request.setAttribute("clientCourant", clientCourant);
         this.getServletContext().getRequestDispatcher("/personalData.jsp").forward(request, response);
     }
+    
+    protected void processPostRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException, SQLException{
+        
+        String Contact = request.getParameter("Contact");
+        String Societe = request.getParameter("Societe");
+        String Fonction = request.getParameter("Fonction");
+        String Adresse = request.getParameter("Adresse");
+        String Ville = request.getParameter("Ville");
+        String Region = request.getParameter("Region");
+        String Code_Postal = request.getParameter("Code_Postal");
+        String Pays = request.getParameter("Pays");
+        String Telephone = request.getParameter("Telephone");
+        String Fax = request.getParameter("Fax");
+        
+        HttpSession session = request.getSession();
+        String client = (String) session.getAttribute("contact");
+        Client clientA = daoclient.getClient("contact");
+        
+        
+        
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
