@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import javax.sql.DataSource;
  *
  * @author Quentin
  */
+@WebServlet(name = "AccueilServlet", urlPatterns = {"/AccueilServlet"})
 public class AccueilServlet extends HttpServlet {
     
     private static DataSource dataSource = DataSourceFactory.getDataSource();
@@ -93,16 +95,16 @@ public class AccueilServlet extends HttpServlet {
         String mdp = request.getParameter("mdp");
         
         if((id.equals("admin"))&&(mdp.equals("admin"))){
-            HttpSession session = request.getSession(true);
+            HttpSession session = request.getSession();
             session.setAttribute("contact", "admin");
             this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
         } else {
             if(daoclient.getClient(id) != null){
                 Client test = daoclient.getClient(id);
                 if ((test.getContact().equals(id))&&(test.getCode().equals(mdp))){
-                    HttpSession session = request.getSession(true);
+                    HttpSession session = request.getSession();
                     session.setAttribute("contact", id);
-                    this.getServletContext().getRequestDispatcher("/personalData.jsp").forward(request, response);
+                    response.sendRedirect("personalDataServlet");
                 } else {
                     this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
                 }
