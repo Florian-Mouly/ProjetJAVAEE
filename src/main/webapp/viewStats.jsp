@@ -7,18 +7,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-   <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+   <!-- On charge l'API Google -->
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
     
     // Load the Visualization API and the piechart package.
-    google.charts.load('current', {'packages':['corechart']});
+   google.load("visualization", "1", {packages: ["corechart"]});
       
     // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(drawChart);
+    google.setOnLoadCallback(doAjax);
       // Callback that creates and populates a data table, 
       // instantiates the pie chart, passes in the data and
       // draws it.
@@ -29,7 +28,7 @@
 		title: 'Ventes par nom',
 		is3D: true,
                 width:400,
-                height:400,
+                height:400
                                 
                            
             };
@@ -40,20 +39,20 @@
       function doAjax() {
 	$.ajax({
             url: "ChiffreAffaireClientServlet",
-            dataType: "json",
+            dataType: "text",
             success: // La fonction qui traite les résultats
-		function (result) {
+		function (resultat) {
 		// On reformate le résultat comme un tableau
                     var chartData = [];
 		// On met le descriptif des données
                     chartData.push(["Nom", "Ventes"]);
-                    for(var client in result.records) {
-			chartData.push([client,result.records[client]]);
+                    for(var client in resultat.records) {
+			chartData.push([client,resultat.records[client]]);
                     }
 		// On dessine le graphique
                     drawChart(chartData);
-		},
-                    error: showError
+                    },
+                   error: showError
 			});
 		}
 		
@@ -89,17 +88,22 @@
             <label><input name="g" type="radio" onclick="doClientAjax()" checked />Par Client</label>
         </div>
         <div>
-            <form id='codeForm' style="text-align:center;">
-                <label for="start">Date debut :<input name="dateDebut" type="date" id="start"></label>
-                <label for="fin">Date fin :<input name="dateFin" type="date" id="fin"></label>
+            <form id="idgraph" action="CiffreAffaireClientServlet" method="POST" id="graph">   
+                Date debut :<input name="dateDeb" type="date" id="start">
+                Date fin :<input name="dateFin" type="date" id="fin">
                 <button type="button" onclick="" >Valider</button>
+                  
+                
             </form>
+            
+           
             
             
         </div>
         
             </fieldset>
     </div> 
-    <div id="chart_div" style="width:400; height:300"></div>
+              <div style="border: 2px dotted black;" id="chart_div" style="width:400; height:300"></div>
+
   </body>
 </html>
