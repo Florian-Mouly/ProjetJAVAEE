@@ -1,6 +1,7 @@
 package DAO;
 
 import Entities.Commande;
+import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -224,6 +225,7 @@ public class CommandeDAO {
 				result.put(cli, nb);
 			}
 		}
+                
 		return result;
 	}
         

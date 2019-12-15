@@ -11,7 +11,12 @@ import java.io.PrintWriter;
 import java.util.Collections;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import static java.lang.System.out;
+import java.sql.SQLException;
+import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ChiffreAffaireClientServlet", urlPatterns = {"/ChiffreAffaireClientServlet"})
 public class ChiffreAffaireClientServlet extends HttpServlet {
+               CommandeDAO commandedao;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,32 +41,15 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
+                Map<String,Integer> map = commandedao.getNBAllCommandeParClient();
+                request.setAttribute("map", map);
+                Gson gson= new Gson();
+                String jsonString = gson.toJson(map);
+                response.setContentType(jsonString);
+                response.getWriter().write(jsonString);
+                System.out.println("map="+map);
         
-                response.setContentType("text/html;charset=UTF-8");
-                CommandeDAO commande = (CommandeDAO) getServletContext().getAttribute("produit");
-		Properties resultat = new Properties();
-     
-                String dateD = request.getParameter("dateDebut");
-                String dateF = request.getParameter("dateFin");
-		
-                try {
-                    resultat.put("records", commande.totalForCustomer(dateD, dateF));
-                     
-		} catch (Exception  ex) {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			resultat.put("message", ex.getMessage());
-		}
-
-		try (PrintWriter out = response.getWriter()) {
-			// On spécifie que la servlet va générer du JSON
-			response.setContentType("application/json;charset=UTF-8");
-
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			String gsonData = gson.toJson(resultat);
-			out.println(gsonData);
-            
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -75,7 +64,11 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                   try {
+                       processRequest(request, response);
+                   } catch (SQLException ex) {
+                       Logger.getLogger(ChiffreAffaireClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+                   }
     }
 
     /**
@@ -89,7 +82,11 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                   try {
+                       processRequest(request, response);
+                   } catch (SQLException ex) {
+                       Logger.getLogger(ChiffreAffaireClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+                   }
     }
 
     /**
