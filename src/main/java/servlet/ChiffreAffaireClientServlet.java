@@ -6,6 +6,7 @@
 package servlet;
 
 import DAO.CommandeDAO;
+import DAO.DataSourceFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
@@ -42,14 +43,23 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-                Map<String,Integer> map = commandedao.getNBAllCommandeParClient();
-                request.setAttribute("map", map);
-                Gson gson= new Gson();
-                String jsonString = gson.toJson(map);
-                response.setContentType(jsonString);
-                response.getWriter().write(jsonString);
-                System.out.println("map="+map);
-        
+                CommandeDAO dao = new CommandeDAO(DataSourceFactory.getDataSource());
+                Properties result = new Properties();
+                try{
+                    String dateDebut = request.getParameter("date debut");
+                    String dateFin = request.getParameter("date fin");
+                    result.put("records", dao.getNBCommandeParClient(dateDebut, dateFin));
+                } catch (SQLException ex){
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		    result.put("records", Collections.EMPTY_LIST);
+		    result.put("message", ex.getMessage());
+                }
+                try(PrintWriter out = response.getWriter()){
+                    response.setContentType("application/json;charset=UTF-8");   
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String Datajson = gson.toJson(result);
+                    out.println("data="+Datajson);
+               }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

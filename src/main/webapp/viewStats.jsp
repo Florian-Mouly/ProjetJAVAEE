@@ -10,6 +10,7 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
    <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript">
     
@@ -21,30 +22,47 @@
       // Callback that creates and populates a data table, 
       // instantiates the pie chart, passes in the data and
       // draws it.
-       function drawChart() {
-                 var jsonData = $.ajax({
-                    url: "ChiffreAffaireClientServlet",
-                    dataType: "json",
-                    async: false
-                }).responseText;
-                console.log(jsonData);
-
-              
-      // Create the data table.
       
-      var data = new google.visualization.DataTable(jsonData);
-      
-
-      // Set chart options
-      var options = {'title':'Chiffre affaire client',
-                     'width':400,
-                     'height':300};
-
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-      
+      function drawChart(dataArray) {
+	var data = google.visualization.arrayToDataTable(dataArray);
+	var options = {
+		title: 'Ventes par nom',
+		is3D: true,
+                width:400,
+                height:400,
+                                
+                           
+            };
+	var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+	chart.draw(data, options);
     }
+                
+      function doAjax() {
+	$.ajax({
+            url: "ChiffreAffaireClientServlet",
+            dataType: "json",
+            success: // La fonction qui traite les résultats
+		function (result) {
+		// On reformate le résultat comme un tableau
+                    var chartData = [];
+		// On met le descriptif des données
+                    chartData.push(["Nom", "Ventes"]);
+                    for(var client in result.records) {
+			chartData.push([client,result.records[client]]);
+                    }
+		// On dessine le graphique
+                    drawChart(chartData);
+		},
+                    error: showError
+			});
+		}
+		
+		// Fonction qui traite les erreurs de la requête
+		function showError(xhr, status, message) {
+			alert("Erreur: " + status + " : " + message);
+		}
+
+    
     
     
     </script>
@@ -82,7 +100,6 @@
         
             </fieldset>
     </div> 
-//Div that will hold the pie chart
     <div id="chart_div" style="width:400; height:300"></div>
   </body>
 </html>
