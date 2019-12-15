@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ChiffreAffaireClientServlet", urlPatterns = {"/ChiffreAffaireClientServlet"})
 public class ChiffreAffaireClientServlet extends HttpServlet {
-               CommandeDAO commandedao;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,9 +45,9 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
                 CommandeDAO dao = new CommandeDAO(DataSourceFactory.getDataSource());
                 Properties result = new Properties();
                 try{
-                    String dateDebut = request.getParameter("date debut");
-                    String dateFin = request.getParameter("date fin");
-                    result.put("records", dao.getNBCommandeParClient(dateDebut, dateFin));
+                    String dateDeb = request.getParameter("dateDeb");
+                    String dateFin = request.getParameter("dateFin");
+                    result.put("records", dao.getNBCommandeParClient(dateDeb, dateFin));
                 } catch (SQLException ex){
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		    result.put("records", Collections.EMPTY_LIST);
