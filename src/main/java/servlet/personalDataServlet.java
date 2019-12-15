@@ -49,37 +49,40 @@ public class personalDataServlet extends HttpServlet {
         
         String client = (String) session.getAttribute("contact");
         clientCourant = daoclient.getClient(client);
-        request.setAttribute("clientCourant", clientCourant);
-        this.getServletContext().getRequestDispatcher("/personalData.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        boolean ok = false;
+        
+        
+        System.out.println("----------------------TEST-----------------------------");
+        System.out.println(action);
+        if (action != null ) {
+            switch(action){
+            case "Envoyer":
+                System.out.println("TEST ENVOYER");
+                String Contact = request.getParameter("Contact");
+                String Societe = request.getParameter("Societe");
+                String Fonction = request.getParameter("Fonction");
+                String Adresse = request.getParameter("Adresse");
+                String Ville = request.getParameter("Ville");
+                String Region = request.getParameter("Region");
+                String Code_Postal = request.getParameter("Code_Postal");
+                String Pays = request.getParameter("Pays");
+                String Telephone = request.getParameter("Telephone");
+                String Fax = request.getParameter("Fax");
+                daoclient.editClient(clientCourant, null, Contact, Societe, Fonction, Adresse, Ville, Region, Code_Postal, Pays, Telephone, Fax);
+                session.setAttribute("contact", Contact);
+                clientCourant = daoclient.getClient(Contact);
+            case "Voir":
+                ok = true;
+                response.sendRedirect("commandeClientServlet");
+            }
+        }
+        if(ok == false){
+            request.setAttribute("clientCourant", clientCourant);
+            this.getServletContext().getRequestDispatcher("/personalData.jsp").forward(request, response);
+        }
     }
     
-    protected void processPostRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException, SQLException{
-        
-        String Contact = request.getParameter("Contact");
-        String Societe = request.getParameter("Societe");
-        String Fonction = request.getParameter("Fonction");
-        String Adresse = request.getParameter("Adresse");
-        String Ville = request.getParameter("Ville");
-        String Region = request.getParameter("Region");
-        String Code_Postal = request.getParameter("Code_Postal");
-        String Pays = request.getParameter("Pays");
-        String Telephone = request.getParameter("Telephone");
-        String Fax = request.getParameter("Fax");
-        
-        HttpSession session = request.getSession();
-        String client = (String) session.getAttribute("contact");
-        Client clientA = daoclient.getClient("contact");
-        
-        daoclient.editClient(clientA, client, Contact, Societe, Fonction, Adresse, Ville, Region, Code_Postal, Pays, Telephone, Fax);
-        session.setAttribute("contact", Contact);
-        
-        this.getServletContext().getRequestDispatcher("/personalDataServlet.jsp").forward(request, response);
-        
-        
-        
-        
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

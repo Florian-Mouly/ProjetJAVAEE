@@ -18,7 +18,7 @@
     </head>
     <body style="background-color: #313131">
         
-        <script>
+        <!--<script>
             function enrformtest(){
                 var nomod = document.getElementById("modif");
                 var nomod2 = document.getElementById("modif2");
@@ -68,7 +68,7 @@
                 nomod9.removeAttribute("disabled");
                 nomod10.removeAttribute("disabled");
                }
-        </script>
+        </script> -->
         
           <div class="container-fluid" style="background-color: #D6D4D4;">
 			<div class="row" id="navigation" style="height:75px">
@@ -127,9 +127,10 @@
                     <input name="Fax" id="modif10" type="text" class="form-control" value="${clientCourant.getFax()}">
                 </div>
             </div>
-                <button   type="button" class="btn btn-dark" ><a onclick='enrformtest()'>Enregistrer</a></button>
-                <button type="button" class="btn btn-outline-dark" onclick="modifformtest()" >Modifier</button>
+                <!--<button type="button" class="btn btn-dark" ><a onclick='enrformtest()'>Enregistrer</a></button>
+                <button type="button" class="btn btn-outline-dark" onclick="modifformtest()" >Modifier</button> -->
                 <button type="submit" class="btn" name="action" value="Envoyer">Envoyer</button>
+                <button type="submit" class="btn" name="action" value="Voir">Vos Commandes</button>
             </form>
             </div>
         </div>
