@@ -96,16 +96,16 @@ public class AccueilServlet extends HttpServlet {
         String mdp = request.getParameter("mdp");
         
         if((id.equals("admin"))&&(mdp.equals("admin"))){
-            HttpSession session = request.getSession(true);
+            HttpSession session = request.getSession();
             session.setAttribute("contact", "admin");
             this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
         } else {
             if(daoclient.getClient(id) != null){
                 Client test = daoclient.getClient(id);
                 if ((test.getContact().equals(id))&&(test.getCode().equals(mdp))){
-                    HttpSession session = request.getSession(true);
+                    HttpSession session = request.getSession();
                     session.setAttribute("contact", id);
-                    response.sendRedirect("commandeClientServlet");
+                    response.sendRedirect("personalDataServlet");
                 } else {
                     this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
                 }

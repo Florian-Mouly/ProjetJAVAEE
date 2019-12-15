@@ -4,6 +4,7 @@
     Author     : damie
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,6 +26,11 @@
                 var nomod4 = document.getElementById("modif4");
                 var nomod5 = document.getElementById("modif5");
                 var nomod6= document.getElementById("modif6");
+                var nomod7= document.getElementById("modif7");
+                var nomod8= document.getElementById("modif8");
+                var nomod9= document.getElementById("modif9");
+                var nomod10= document.getElementById("modif10");
+                
 
                 nomod.setAttribute("disabled","disabled");
                 nomod2.setAttribute("disabled","disabled");
@@ -32,6 +38,11 @@
                 nomod4.setAttribute("disabled","disabled");
                 nomod5.setAttribute("disabled","disabled");
                 nomod6.setAttribute("disabled","disabled");
+                nomod7.setAttribute("disabled","disabled");
+                nomod8.setAttribute("disabled","disabled");
+                nomod9.setAttribute("disabled","disabled");
+                nomod10.setAttribute("disabled","disabled");
+                
                }
                
            function modifformtest(){
@@ -41,6 +52,10 @@
                 var nomod4 = document.getElementById("modif4");
                 var nomod5 = document.getElementById("modif5");
                 var nomod6= document.getElementById("modif6");
+                var nomod7= document.getElementById("modif7");
+                var nomod8= document.getElementById("modif8");
+                var nomod9= document.getElementById("modif9");
+                var nomod10= document.getElementById("modif10");
 
                 nomod.removeAttribute("disabled");
                 nomod2.removeAttribute("disabled");
@@ -48,6 +63,10 @@
                 nomod4.removeAttribute("disabled");
                 nomod5.removeAttribute("disabled");
                 nomod6.removeAttribute("disabled");
+                nomod7.setAttribute("disabled");
+                nomod8.setAttribute("disabled");
+                nomod9.setAttribute("disabled");
+                nomod10.setAttribute("disabled");
                }
         </script>
         
@@ -58,53 +77,60 @@
                             </div>
                         </div>
           </div>
-        <div class="row" style="margin:auto; width:90vh; margin-top:80px; padding:15px; border: 2px solid #E1E1E1; background-color: #A6A7CA;">
+        <div class="row" style="margin:auto; width:90vh; margin-top:80px; margin-bottom:80px; padding:15px; border: 2px solid #E1E1E1; background-color: #A6A7CA;">
             <div class="col">
-            <form  >
+            <form>
                 <div class="form-row">
                     <div class="form-group col-md-6" >
-                        <label  for="inputEmail4">Email</label>
-                        <input  type="email" class="form-control" id="modif" placeholder="Email">
+                        
+                        <label  for="inputEmail4">Contact</label>
+                        <input  type="email" class="form-control" id="modif" value="${clientCourant.getContact()}">
                      </div> 
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">Société</label>
-                        <input type="password" class="form-control" id="modif2" placeholder="Société">
+                        <input type="text" class="form-control" id="modif2" value="${clientCourant.getSociete()}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddress">Fonction</label>
-                    <input type="text" class="form-control" id="modif3">
+                    <input type="text" class="form-control" id="modif3" value="${clientCourant.getFonction()}">
                 </div>
               <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputAddress2">Addrese</label>
-                    <input id="modif4" type="text" class="form-control"  placeholder="Ex: 5 Rue du JavaEE">
+                <div class="form-group col-md-4">
+                    <label for="inputAddress2">Adresse</label>
+                    <input id="modif4" type="text" class="form-control"  value="${clientCourant.getAdresse()}">
                 </div>
                     <div class="form-group col-md-4">
                     <label for="inputCity">Ville</label>
-                    <input id="modif5" type="text" class="form-control">
+                    <input id="modif5" type="text" class="form-control" value="${clientCourant.getVille()}">
                     </div>
-                 </div>
+               </div>
+            <div class="form-row" style="margin:auto; width:80vh;">
+                <div class="form-group col-md-4">
+                    <label for="inputCity">Region</label>
+                    <input id="modif6" type="text" class="form-control" value="${clientCourant.getRegion()}">
                 </div>
-            <div class="form-row" style="margin:auto; width:90vh;">
-                <div class="form-group col-md-6">
-                    <label for="inputCity">Ville</label>
-                    <input id="modif6" type="text" class="form-control">
+                <div class="form-group col-md-4">
+                    <label for="inputCity">Code Postal</label>
+                    <input id="modif7" type="text" class="form-control" value="${clientCourant.getCode_Postal()}">
                 </div>
-            <div class="form-group col-md-4">
-                <label for="inputState">Pays</label>
-                <select  id="inputState" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
+                <div class="form-group col-md-3">
+                    <label for="inputCity">Pays</label>
+                    <input id="modif8" type="text" class="form-control" value="${clientCourant.getPays()}">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputCity">Telephone</label>
+                    <input id="modif9" type="text" class="form-control" value="${clientCourant.getTelephone()}">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputCity">FAX</label>
+                    <input id="modif10" type="text" class="form-control" value="${clientCourant.getFax()}">
+                </div>
             </div>
-
-         </div>
-        <button   type="button" class="btn btn-dark" ><a onclick='enrformtest()'>Enregistrer</a></button>
-        <button type="button" class="btn btn-outline-dark" onclick="modifformtest()" >Modifier</button>
-
-
-   </form>
+                <button   type="button" class="btn btn-dark" ><a onclick='enrformtest()'>Enregistrer</a></button>
+                <button type="button" class="btn btn-outline-dark" onclick="modifformtest()" >Modifier</button>
+            </form>
             </div>
+        </div>
     </body>
 </html>
