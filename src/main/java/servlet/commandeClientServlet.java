@@ -34,25 +34,49 @@ import javax.sql.DataSource;
 @WebServlet(name = "commandeClientServlet", urlPatterns = {"/commandeClientServlet"})
 public class commandeClientServlet extends HttpServlet {
 
+    private static DataSource dataSource = DataSourceFactory.getDataSource();
     public CommandeDAO commandeDAO;
     public ClientDAO clientDAO;
     public List<Commande> list_commande;
     public DataSource datasource;
+    public Client clientCourant;
+    ClientDAO daoclient = new ClientDAO(dataSource);
+
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         String client = (String)session.getAttribute("contact");
         datasource= DataSourceFactory.getDataSource();
         clientDAO = new ClientDAO(datasource);
         commandeDAO = new CommandeDAO(datasource);
+        clientCourant = daoclient.getClient(client);
         String clientCode = clientDAO.getClient(client).getCode();
         list_commande=commandeDAO.getCommande(clientCode);
         
+        boolean ok = false;
+        String action = request.getParameter("action");
+        
+        if (action != null ) {
+            switch(action){
+            case "Accueil":
+                 response.sendRedirect("AcceuilServlet");
+                 break;
+            case "Info":
+                 ok = true;
+                 response.sendRedirect("personalData");
+            }
+        }
+           if(ok == false){
+            request.setAttribute("clientCourant", clientCourant);
+            this.getServletContext().getRequestDispatcher("/listeCommandes.jsp").forward(request, response);
+        }
+                
         request.setAttribute("list_commande", list_commande);
         
-        this.getServletContext().getRequestDispatcher("/listeCommandes.jsp").forward(request, response);
+        
     }
     
 

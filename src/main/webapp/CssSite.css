@@ -21,3 +21,31 @@
 
 }
 
+
+.infocommandes{
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+  border: 4px solid #293763;
+  background-color: #9AD2FF;
+  text-align: center;
+  border-collapse: collapse;
+  margin:auto;
+  margin-top:150px;
+}
+
+table.infocommandes td, table.infocommandes th {
+  border: 1px solid #293763;
+  padding: 12px 20px;
+}
+
+table.infocommandes tbody td {
+  font-weight: bold;
+}
+table.infocommandes tr:nth-child(even) {
+  background: #81B7F5;
+}
+table.infocommandes thead {
+  background: #9E9E9E;
+  color: #FFFFFF;
+  text-align: center;
+
+}
