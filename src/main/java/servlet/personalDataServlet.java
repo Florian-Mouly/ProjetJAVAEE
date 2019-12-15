@@ -71,6 +71,11 @@ public class personalDataServlet extends HttpServlet {
         String client = (String) session.getAttribute("contact");
         Client clientA = daoclient.getClient("contact");
         
+        daoclient.editClient(clientA, client, Contact, Societe, Fonction, Adresse, Ville, Region, Code_Postal, Pays, Telephone, Fax);
+        session.setAttribute("contact", Contact);
+        
+        this.getServletContext().getRequestDispatcher("/personalDataServlet.jsp").forward(request, response);
+        
         
         
         
