@@ -84,7 +84,7 @@
                     <div class="form-group col-md-6" >
                         
                         <label  for="inputEmail4">Contact</label>
-                        <input  name="Contact" type="email" class="form-control" id="modif" value="${clientCourant.getContact()}">
+                        <input  name="Contact" type="text" class="form-control" id="modif" value="${clientCourant.getContact()}">
                      </div> 
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">Société</label>
