@@ -14,16 +14,19 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+
 /**
  *
  * @author Quentin
  */
+@WebServlet(name = "AccueilServlet", urlPatterns = {"/AccueilServlet"})
 public class AccueilServlet extends HttpServlet {
     
     private static DataSource dataSource = DataSourceFactory.getDataSource();
@@ -102,7 +105,7 @@ public class AccueilServlet extends HttpServlet {
                 if ((test.getContact().equals(id))&&(test.getCode().equals(mdp))){
                     HttpSession session = request.getSession(true);
                     session.setAttribute("contact", id);
-                    this.getServletContext().getRequestDispatcher("/personalData.jsp").forward(request, response);
+                    response.sendRedirect("commandeClientServlet");
                 } else {
                     this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
                 }

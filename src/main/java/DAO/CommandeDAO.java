@@ -56,9 +56,9 @@ public class CommandeDAO {
 	 * @return Commande du client
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public Commande getCommande(String client) throws SQLException {
+	public List<Commande> getCommande(String client) throws SQLException {
 
-		Commande result=null;
+		List<Commande> result=new LinkedList<>();
 
 		String sql = "SELECT * FROM Commande WHERE Client=?";
 		try (Connection connection = myDataSource.getConnection(); 
@@ -66,10 +66,20 @@ public class CommandeDAO {
                         stmt.setString(1, client);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				int Numero = rs.getInt("Numero");
-				String Client = rs.getString("Client");
-				Commande c = new Commande(Numero, Client, null, null, null, null, null, null, null, null, null, null);
-				result=c;
+                            int Numero = rs.getInt("Numero");
+                            String Client = rs.getString("Client");
+                            String Saisie_le = rs.getString("Saisie_le");
+                            String envoyee_le = rs.getString("envoyee_le");
+                            Double port = rs.getDouble("port");
+                            String destinataire = rs.getString("destinataire");
+                            String adresse_livraison = rs.getString("adresse_livraison");
+                            String ville_livraison = rs.getString("ville_livraison");
+                            String region_livraison = rs.getString("region_livraison");
+                            String code_postal_livrais = rs.getString("code_postal_livrais");
+                            String pays_livraison = rs.getString("pays_livraison");
+                            Double remise = rs.getDouble("remise");
+                            Commande c = new Commande(Numero, Client, Saisie_le, envoyee_le, port, destinataire, adresse_livraison, ville_livraison, region_livraison, code_postal_livrais, pays_livraison, remise);
+                            result.add(c);
 			}
 		}
 		return result;

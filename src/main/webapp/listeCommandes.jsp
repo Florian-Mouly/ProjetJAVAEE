@@ -14,10 +14,14 @@
     </head>
     <body>
         
-        <table bordeur>
-            <tr><td></td></tr>
-            
+        <table border="1">
+            <tr><td>N° commande</td><td>Effectuée le</td><td>Adresse de livraison</td><td></td></tr>
+            <c:forEach items="${ list_commande}" var="commande">
+                <tr><td>${commande.getNumero()}</td><td>${commande.getSaisie_le()}</td><td>${commande.getAdresse_livraison()}</td><td></td></tr>
+            </c:forEach>
         </table>
+            
+        
             
     <c:out value="${ contact }"></c:out> ma variable de session : ${ sessionScope.contact }
     </body>
