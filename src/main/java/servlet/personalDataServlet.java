@@ -72,6 +72,7 @@ public class personalDataServlet extends HttpServlet {
                 daoclient.editClient(clientCourant, null, Contact, Societe, Fonction, Adresse, Ville, Region, Code_Postal, Pays, Telephone, Fax);
                 session.setAttribute("contact", Contact);
                 clientCourant = daoclient.getClient(Contact);
+                break;
             case "Voir":
                 ok = true;
                 response.sendRedirect("commandeClientServlet");
