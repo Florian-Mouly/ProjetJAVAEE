@@ -149,7 +149,6 @@ public class CommandeDAO {
 	 */
 	public Map<String, Integer> getNBCommandeParClient (String dateDeb, String dateFin) throws SQLException {
             
-            
 
 		Map<String, Integer> result=new HashMap<String, Integer>();
 
@@ -159,6 +158,7 @@ public class CommandeDAO {
                 if (dateFin == null) {
                  dateFin = "1994-12-24";
                      }
+                
 		String sql = "SELECT count(distinct Numero) as NB, C.CONTACT as nom FROM Client C , Commande Co WHERE C.CODE=Co.CLIENT and Saisie_le between ? and ? group by C.CONTACT";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
