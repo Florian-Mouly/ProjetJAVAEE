@@ -13,6 +13,12 @@
         <title>JSP Page</title>
     </head>
     <body>
+        
+        <table bordeur>
+            <tr><td></td></tr>
+            
+        </table>
+            
     <c:out value="${ contact }"></c:out> ma variable de session : ${ sessionScope.contact }
     </body>
 </html>

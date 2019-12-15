@@ -93,11 +93,15 @@ public class AccueilServlet extends HttpServlet {
         String mdp = request.getParameter("mdp");
         
         if((id.equals("admin"))&&(mdp.equals("admin"))){
+            HttpSession session = request.getSession(true);
+            session.setAttribute("contact", "admin");
             this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
         } else {
             if(daoclient.getClient(id) != null){
                 Client test = daoclient.getClient(id);
                 if ((test.getContact().equals(id))&&(test.getCode().equals(mdp))){
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("contact", id);
                     this.getServletContext().getRequestDispatcher("/personalData.jsp").forward(request, response);
                 } else {
                     this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
@@ -106,31 +110,6 @@ public class AccueilServlet extends HttpServlet {
                 this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
             }
         }
-        String cate = request.getParameter("formC");
-        System.out.println("____________________________________________________________________________________________________________________________________________________ "+ cate);
-        
-        if(cate=="0"){
-            try{
-                list_produit = daoproduit.allProduit(); //liste des produits
-                list_categorie= daocategorie.allCategorie(); //liste des categories
-            }catch(SQLException e){
-
-            }
-        }else{
-            try{
-                list_produit = daoproduit.getProduitByCategorie(Integer.parseInt(cate)) ;//liste des produits de la categorie
-                list_categorie= daocategorie.allCategorie(); //liste des categories
-            }catch(SQLException e){
-
-            }
-        }
-        
-        
-
-        request.setAttribute("list_produit", list_produit);
-        request.setAttribute("list_categorie", list_categorie);
-        
-        this.getServletContext().getRequestDispatcher("/PageAccueil.jsp").forward(request, response);
     }
 
     
