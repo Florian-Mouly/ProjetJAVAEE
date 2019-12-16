@@ -30,7 +30,9 @@
 			</div>
             
 	</div>
-        
+        <form>
+            <button type="submit" class="btn" name="action" value="Edit" >Edition de produit</button>
+        </form>
         <div class="row">
             <div class ="col">
                 <table border="1" class="infocommandes" >

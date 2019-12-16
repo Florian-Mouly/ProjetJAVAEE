@@ -15,7 +15,7 @@ public class Produit {
     private int fournisseur;
     private int categorie;
     private String quantite_par_unite;
-    private float prix_unitaire;
+    private double prix_unitaire;
     private int unite_en_stock;
     private int unites_commandees;
     private int niveau_de_reapprovi;
@@ -81,7 +81,7 @@ public class Produit {
         this.quantite_par_unite = quantite_par_unite;
     }
 
-    public float getPrix_unitaire() {
+    public double getPrix_unitaire() {
         return prix_unitaire;
     }
 

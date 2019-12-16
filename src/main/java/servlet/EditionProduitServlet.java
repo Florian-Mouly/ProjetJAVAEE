@@ -24,15 +24,15 @@ import javax.sql.DataSource;
 
 /**
  *
- * @author Flo pc
+ * @author damie
  */
-@WebServlet(name = "AdminProduitServlet", urlPatterns = {"/AdminProduitServlet"})
-public class AdminProduitServlet extends HttpServlet {
+@WebServlet(name = "EditionProduitServlet", urlPatterns = {"/EditionProduitServlet"})
+public class EditionProduitServlet extends HttpServlet {
 
     private static DataSource dataSource = DataSourceFactory.getDataSource();
+    //public Produit produitCourant;
+    ProduitDAO daoproduit = new ProduitDAO(dataSource);
     public List<Produit> listProduit;
-    ProduitDAO  daoproduit = new ProduitDAO(dataSource);
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,41 +45,48 @@ public class AdminProduitServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        
         HttpSession session = request.getSession();
+        
+//        int client = (String) session.getAttribute("contact");
+//        produitCourant = daoproduit.getProduit(client);
         String action = request.getParameter("action");
-        listProduit = daoproduit.allProduit();
-        
         boolean ok = false;
-        boolean ok2 = false;
-        boolean ok3 = false;
+        boolean ok2= false;
         
+        System.out.println("______________________________________________________________________"+action);
         if (action != null ) {
             switch(action){
-                case "Accueil":
-                    ok = true;
-                    session.setAttribute("contact",null);
-                    response.sendRedirect("AccueilServlet");
-                    break;
-                case "Retour":
-                    ok2 = true;
-                    response.sendRedirect("ChiffreAffaireClientServlet");
-                    break;
-                case "Edit":
-                    ok3 = true;
-                    response.sendRedirect("EditionProduitServlet");
-                    
+            case "Save":
+                System.out.println("TEST ENVOYER");
+                String nom = request.getParameter("Nom");
+                int fournisseur = Integer.parseInt(request.getParameter("Fournisseur"));
+                int categorie = Integer.parseInt(request.getParameter("Categorie"));
+                String quantite_par_unite = request.getParameter("Quantite_par_unite");
+                Double prix_unitaire = Double.parseDouble(request.getParameter("Prix_unitaire"));
+                int unite_en_stock = Integer.parseInt(request.getParameter("Unite_en_stock"));
+                int unites_commandees = Integer.parseInt(request.getParameter("Unites_commandees"));
+                int niveau_de_reapprovi = Integer.parseInt(request.getParameter("Niveau_de_reapprovi"));
+                int indisponible = Integer.parseInt(request.getParameter("Indisponible"));
+                int ref=666;
+                daoproduit.ajoutProduit(nom, ref, fournisseur, categorie, quantite_par_unite, prix_unitaire, unite_en_stock, unites_commandees, niveau_de_reapprovi, indisponible);
+                session.setAttribute("contact", "admin");
+                response.sendRedirect("AdminProduitServlet");
+                ok2= true;
+                break;
+            case "Voir":
+                ok = true;
+                response.sendRedirect("commandeClientServlet");
+                break;
+            case "Deco":
+                ok2= true;
+                session.setAttribute("contact",null);
+                response.sendRedirect("AccueilServlet");
+                break;
             }
         }
-        
-        if (ok == false && ok2 == false && ok3==false){
-            
-            request.setAttribute("listProduit", listProduit);
-            this.getServletContext().getRequestDispatcher("/listeProduitsAdmin.jsp").forward(request, response);
+        if(ok == false && ok2 == false){
+            this.getServletContext().getRequestDispatcher("/editionProduit.jsp").forward(request, response);
         }
-        
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -97,7 +104,7 @@ public class AdminProduitServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AdminProduitServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditionProduitServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -115,7 +122,7 @@ public class AdminProduitServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AdminProduitServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditionProduitServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
