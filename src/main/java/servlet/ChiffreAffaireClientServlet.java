@@ -17,9 +17,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import static java.lang.System.out;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -67,6 +69,7 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
                 System.out.println("--TEST--");
                 System.out.println(action);
                 boolean ok = false;
+                boolean ok2 =false;
                 
                 if (action != null ) {
                     switch(action){
@@ -75,9 +78,14 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
                             session.setAttribute("contact",null);
                             response.sendRedirect("AccueilServlet");
                             break;
+                        case "Produits":
+                            ok2 = true;
+                            session.setAttribute("admin","admin");
+                            response.sendRedirect("AdminProduitServlet");
+                        
                     }
                 }
-                if (ok == false){
+                if (ok == false && ok2 == false){
                     this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
                 }
                 

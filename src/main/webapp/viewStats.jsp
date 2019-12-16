@@ -171,12 +171,8 @@
     <div class="navbar" style="width: 100%;background-color: #555;overflow:auto;" >
         <form>
         <button type="submit" class="btn" name="action" value="Accueil">Accueil</button>
-        <div class="dropdown" >
-            <div class="dropdown-content">
-                <button type="button" class="btn btn-light" name="action" value="Graphique"><a style="text-decoration:none; color: black;">Graphiques</a></button>
-            </div>
-            
-        </div>
+        <button type="submit" class="btn" name="action" value="Produits">Tous les produits</button>
+        
         </form>
         
          <fieldset id="graphique" title="Graphiques" style="color:white;font-family:Arial;">
