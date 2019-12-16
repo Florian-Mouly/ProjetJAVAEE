@@ -13,10 +13,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Quentin
  */
+@WebServlet(name = "GraphiqueLocalisationServlet", urlPatterns = {"/GraphiqueLocalisationServlet"})
+
 public class GraphiqueLocalisationServlet extends HttpServlet {
 
 
@@ -38,24 +42,31 @@ public class GraphiqueLocalisationServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-                CommandeDAO dao = new CommandeDAO(DataSourceFactory.getDataSource());
-                Properties result = new Properties();
-                try{
-                    String dateDeb = request.getParameter("dateDeb");
-                    String dateFin = request.getParameter("dateFin");
-                    result.put("records", dao.getNBCommandeParPays(dateDeb, dateFin));
-                } catch (SQLException ex){
-                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		    result.put("records", Collections.EMPTY_LIST);
-		    result.put("message", ex.getMessage());
+            throws ServletException, IOException {
+        
+                
+		
+		CommandeDAO dao = new CommandeDAO(DataSourceFactory.getDataSource());
+
+
+		try (PrintWriter out = response.getWriter()) {
+			// On spécifie que la servlet va générer du JSON
+//			response.setContentType("application/json;charset=UTF-8");
+//			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//			String gsonData = gson.toJson(resultat);
+//			request.setAttribute("gsonData", gsonData); 
+                        String dateDebut = request.getParameter("dateDebut");
+                        String dateFin = request.getParameter("dateFin");
+                        
+                        HashMap<String, Integer> resultat = dao.getNBCommandeParPays(dateDebut, dateFin); //Properties resultat = new Properties();
+                  
+                        Gson gson = new Gson();
+                        String jsonData = gson.toJson(resultat);
+                        out.print(jsonData);
+                        
+		} catch (SQLException e){
+                    System.err.print(e.getMessage());
                 }
-                try(PrintWriter out = response.getWriter()){
-                    response.setContentType("application/json;charset=UTF-8");   
-                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                    String Datajson = gson.toJson(result);
-                    out.println("data="+Datajson);
-               }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,11 +81,7 @@ public class GraphiqueLocalisationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                   try {
-                       processRequest(request, response);
-                   } catch (SQLException ex) {
-                       Logger.getLogger(ChiffreAffaireClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-                   }
+        processRequest(request, response);
     }
 
     /**
@@ -88,11 +95,7 @@ public class GraphiqueLocalisationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                   try {
-                       processRequest(request, response);
-                   } catch (SQLException ex) {
-                       Logger.getLogger(ChiffreAffaireClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-                   }
+        processRequest(request, response);
     }
 
     /**

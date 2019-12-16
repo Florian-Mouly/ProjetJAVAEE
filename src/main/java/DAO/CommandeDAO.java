@@ -93,26 +93,56 @@ public class CommandeDAO {
          * @param dateFin fin de la plage a rechercher
 	 * @return une hashmap <String, Integer>
 	 * @throws SQLException renvoyées par JDBC
+         * 
+         * 
 	 */
-	public Map<String, Integer> getNBCommandeParCateg(String dateDeb, String dateFin) throws SQLException {
+	public HashMap<String, Integer> getNBCommandeParCateg(String dateDeb, String dateFin) throws SQLException {
 
-		Map<String, Integer> result=new HashMap<String, Integer>();
+		HashMap<String, Integer> result=new HashMap<>();
+                
+                if (dateDeb == null) {
+                 dateDeb = "1994-01-24";
+                   }
+                if (dateFin == null) {
+                 dateFin = "1994-12-24";
+                     }
+
 
 		String sql = "SELECT count(distinct Numero) as NB, Ca.LIBELLE as nom FROM Produit P , Categorie Ca, Commande Co, Ligne L WHERE Co.numero=L.commande and L.produit=P.reference and P.categorie=Ca.code and Saisie_le between ? and ? group by Ca.LIBELLE";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                         stmt.setString(1, dateDeb);
                         stmt.setString(2, dateFin);
-			ResultSet rs = stmt.executeQuery();
+			try(ResultSet rs = stmt.executeQuery()){
 			while (rs.next()) {
 				int nb = rs.getInt("NB");
 				String cate = rs.getString("nom");
 				result.put(cate, nb);
 			}
+                        }
 		}
 		return result;
 	}
         
+          public HashMap totalForProductCode(String date1, String date2) throws SQLException{
+            String sql ="SELECT PRODUCT_CODE, SUM(SHIPPING_COST+PURCHASE_COST * QUANTITY) AS TOTAL FROM CUSTOMER INNER JOIN PURCHASE_ORDER USING(CUSTOMER_ID) INNER JOIN PRODUCT ON PRODUCT.PRODUCT_ID=PURCHASE_ORDER.PRODUCT_ID AND (PURCHASE_ORDER.SALES_DATE BETWEEN ? AND ?) GROUP BY PRODUCT_CODE";
+            HashMap<String,Float> prodcode = new HashMap<>();
+            
+             try (Connection connection = myDataSource.getConnection();
+		PreparedStatement stmt = connection.prepareStatement(sql)) 
+             {
+                stmt.setString(1, date1);
+                stmt.setString(2, date2);
+		try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) { 
+			String id =rs.getString("PRODUCT_CODE");
+                        float mel = rs.getFloat("TOTAL");
+                        prodcode.put(id, mel);
+                    }
+		}
+                return prodcode;
+            }
+          } 
         
         /**
 	 * compte le nombre de commande par pays sur une page donnee
@@ -121,9 +151,16 @@ public class CommandeDAO {
 	 * @return une hashmap <String, Integer>
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public Map<String, Integer> getNBCommandeParPays (String dateDeb, String dateFin) throws SQLException {
+	public HashMap<String, Integer> getNBCommandeParPays (String dateDeb, String dateFin) throws SQLException {
 
-		Map<String, Integer> result=new HashMap<String, Integer>();
+		HashMap<String, Integer> result=new HashMap<>();
+                
+                if (dateDeb == null) {
+                 dateDeb = "1994-01-24";
+                   }
+                if (dateFin == null) {
+                 dateFin = "1994-12-24";
+                     }
 
 		String sql = "SELECT count(distinct Numero) as NB, C.PAYS as pays FROM Client C , Commande Co WHERE C.CODE=Co.CLIENT and Saisie_le between ? and ? group by C.PAYS";
 		try (Connection connection = myDataSource.getConnection(); 
@@ -147,10 +184,10 @@ public class CommandeDAO {
 	 * @return une hashmap <String, Integer>
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public Map<String, Integer> getNBCommandeParClient (String dateDeb, String dateFin) throws SQLException {
+	public HashMap<String, Integer> getNBCommandeParClient (String dateDeb, String dateFin) throws SQLException {
             
 
-		Map<String, Integer> result=new HashMap<String, Integer>();
+		HashMap<String, Integer> result=new HashMap<>();
 
                 if (dateDeb == null) {
                  dateDeb = "1994-01-24";

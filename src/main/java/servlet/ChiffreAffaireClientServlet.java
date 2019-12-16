@@ -19,6 +19,8 @@ import static java.lang.System.out;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -88,8 +90,7 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
                 if (ok == false && ok2 == false){
                     this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
                 }
-                
-                
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -104,11 +105,11 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                   try {
-                       processRequest(request, response);
-                   } catch (SQLException ex) {
-                       Logger.getLogger(ChiffreAffaireClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-                   }
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiffreAffaireClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -122,11 +123,11 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                   try {
-                       processRequest(request, response);
-                   } catch (SQLException ex) {
-                       Logger.getLogger(ChiffreAffaireClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-                   }
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiffreAffaireClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

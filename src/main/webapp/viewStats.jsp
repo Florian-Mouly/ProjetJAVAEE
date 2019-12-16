@@ -8,155 +8,151 @@
 <!DOCTYPE html>
 <html>
   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
    <!-- On charge l'API Google -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-
-        var data = google.visualization.arrayToDataTable(${listOfCommande});
-
-        var options = {
-          title: 'My Daily Activities'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-      }
-    </script>
-
-   <!-- 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">
+         crossorigin="anonymous">
     
-    // Load the Visualization API and the piechart package.
-   google.load("visualization", "1", {packages: ["corechart"]});
+         // Load the Visualization API and the piechart package.
+        google.load("visualization", "1", {packages: ["corechart"]});
       
     // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(doAjax);
-//    google.setOnLoadCallback(doAjax2);
-//    google.setOnLoadCallback(doAjax3);
+//        google.setOnLoadCallback(doAjax);
+        google.setOnLoadCallback(doAjax2);
+        google.setOnLoadCallback(doAjax3);
 
       // Callback that creates and populates a data table, 
       // instantiates the pie chart, passes in the data and
       // draws it.
       
-      function drawChart(dataArray) {
-	var data = google.visualization.arrayToDataTable(dataArray);
-	var options = {
-		title: 'Ventes par nom',
+//   function drawChart(dataArray) {
+//            var data = new google.visualization.DataTable();
+//            data.addColumn("string", "Pays");
+//            data.addColumn("number", "Nb vente");
+//            data.addRows(dataArray);
+//            var options = {
+//		title: 'Ventes par Pays',
+//		is3D: true,
+//                width:600,
+//                height:600
+//                                
+//                           
+//            };
+//            
+//	var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+//	chart.draw(data, options);
+//    }
+//        function doAjax() {
+//                $.ajax({
+//                        url: "GrapheParClient",
+//                        dataType: "json",
+//                        
+//                        success: // La fonction qui traite les résultats
+//                                function (result) {
+//                                    
+//                                        //console.log(result);
+//                                        // On reformate le résultat comme un tableau
+//                                        var chartData = [];
+//                                        // On met le descriptif des données
+//                                        
+//                                        for(var client in result) {
+//                                                chartData.push([client, result[client]]);
+//                                        }
+//                                        // On dessine le graphique
+//                                        drawChart2(chartData);
+//                                },
+//                        error: showError
+//                });
+//        }
+        
+    function drawChart2(dataArray) {
+            var data = new google.visualization.DataTable();
+            data.addColumn("string", "Pays");
+            data.addColumn("number", "Nb vente");
+            data.addRows(dataArray);
+            var options = {
+		title: 'Ventes par Pays',
 		is3D: true,
-                width:400,
-                height:400
+                width:600,
+                height:600
                                 
                            
             };
-	var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-	chart.draw(data, options);
-        console.log(data);
-    }
-                
-      function doAjax() {
-	$.ajax({
-            url: "ChiffreAffaireClientServlet",
             
-            dataType: "json",
-            success: // La fonction qui traite les résultats
-		function (resultat) {
-		// On reformate le résultat comme un tableau
-                    var chartData = [];
-		// On met le descriptif des données
-                    chartData.push(["Nom", "Ventes"]);
-                    for(var client in resultat.records) {
-			chartData.push([client,resultat.records[client]]);
-                    }
-		// On dessine le graphique
-                    drawChart(chartData);
-                    },
-                   error: showError
-			});
+	var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
+	chart.draw(data, options);
+    }
+    
+        function doAjax2() {
+                $.ajax({
+                        url: "GraphiqueLocalisationServlet",
+                        dataType: "json",
+                        
+                        success: // La fonction qui traite les résultats
+                                function (result) {
+                                    
+                                        //console.log(result);
+                                        // On reformate le résultat comme un tableau
+                                        var chartData = [];
+                                        // On met le descriptif des données
+                                        
+                                        for(var client in result) {
+                                                chartData.push([client, result[client]]);
+                                        }
+                                        // On dessine le graphique
+                                        drawChart2(chartData);
+                                },
+                        error: showError
+                });
+        }
+                
+ function drawChart3(dataArray) {
+            var data = new google.visualization.DataTable();
+            data.addColumn("string", "Categorie");
+            data.addColumn("number", "Nb vente");
+            data.addRows(dataArray);
+            var options = {
+		title: 'Ventes par catégorie',
+		is3D: true,
+                width:600,
+                height:600
+                                
+                           
+            };
+            
+	var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
+	chart.draw(data, options);
+    }
+        function doAjax3() {
+                $.ajax({
+                        url: "GraphiqueCommandeServlet",
+                        dataType: "json",
+                        
+                        success: // La fonction qui traite les résultats
+                                function (result) {
+                                    
+                                        //console.log(result);
+                                        // On reformate le résultat comme un tableau
+                                        var chartData = [];
+                                        // On met le descriptif des données
+                                        
+                                        for(var client in result) {
+                                                chartData.push([client, result[client]]);
+                                        }
+                                        // On dessine le graphique
+                                        drawChart3(chartData);
+                                },
+                        error: showError
+                });
+        }
+
+		// Fonction qui traite les erreurs de la requête
+		function showError(xhr, status, message) {
+			alert("Erreur: " + status + " : " + message);
 		}
-                                                                                    
-//        function drawChart2(dataArray) {
-//	var data = google.visualization.arrayToDataTable(dataArray);
-//	var options = {
-//		title: 'Ventes par catégories',
-//		is3D: true,
-//                width:400,
-//                height:400
-//                                
-//                           
-//            };
-//	var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
-//	chart.draw(data, options);
-//        console.log(data);
-//    }
-                
-//      function doAjax2() {
-//	$.ajax({
-//            url: "GraphiqueCommandeServlet",
-//            dataType: "json",
-//            success: // La fonction qui traite les résultats
-//		function (resultat) {
-//		// On reformate le résultat comme un tableau
-//                    var chartData = [];
-//		// On met le descriptif des données
-//                    chartData.push(["Catégorie", "Ventes"]);
-//                    for(var client in resultat.records) {
-//			chartData.push([client,resultat.records[client]]);
-//                    }
-//		// On dessine le graphique
-//                    drawChart(chartData);
-//                    },
-//                   error: showError
-//			});
-//		}
-                
-                
-//        function drawChart3(dataArray) {
-//	var data = google.visualization.arrayToDataTable(dataArray);
-//	var options = {
-//		title: 'Ventes par pays',
-//		is3D: true,
-//                width:400,
-//                height:400
-//                                
-//                           
-//            };
-//	var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
-//	chart.draw(data, options);
-//        console.log(data);
-//    }
-                
-//      function doAjax3() {
-//	$.ajax({
-//            url: "GraphiqueLocalisationServlet",
-//            
-//            dataType: "json",
-//            success: // La fonction qui traite les résultats
-//		function (resultat) {
-//		// On reformate le résultat comme un tableau
-//                    var chartData = [];
-//		// On met le descriptif des données
-//                    chartData.push(["Pays", "Ventes"]);
-//                    for(var client in resultat.records) {
-//			chartData.push([client,resultat.records[client]]);
-//                    }
-//		// On dessine le graphique
-//                    drawChart(chartData);
-//                    },
-//                   error: showError
-//			});
-//		}
-//                
-//		// Fonction qui traite les erreurs de la requête
-//		function showError(xhr, status, message) {
-//			alert("Erreur: " + status + " : " + message);
-//		}
 
     
     
@@ -175,36 +171,24 @@
         
         </form>
         
-         <fieldset id="graphique" title="Graphiques" style="color:white;font-family:Arial;">
-        <legend>Graphiques de chiffre d'affaires</legend>
-        <div>
-            <label><input name="g" type="radio" onclick="doClientAjax()" checked />Par Client</label>
-        </div>
-        <div>
-            <form id="idgraph" action="CiffreAffaireClientServlet" method="POST" id="graph">   
-                Date debut :<input name="dateDeb" type="date" id="start">
-                Date fin :<input name="dateFin" type="date" id="fin">
-                <button type="button" onclick="" >Valider</button>     
-            </form>
+       
+        <div class="dropdown" >
+         
             
+        </div>
+
            
-            
-            
-        </div>
-        
-            </fieldset>
-    </div> 
+           <div class="row">
+               <div class="col" style="margin-left:180px;">
 
-                <form action="ChiffreAffaireClientServlet" method="POST" id="graph">   
             <!-- Le graphique apparaît ici -->
-            <div id="piechart" style="width: 900px; height: 500px;"></div>
+            <div id="chart_div" style="width: 600px; height: 600px; display: inline-block;"></div>
+            <div id="chart_div2" style="width: 600px; height: 600px; display: inline-block;"></div>
+           <div id="chart_div3" style="width: 600px; height: 600px; display: inline-block;"></div> 
 
-            <div id="chart_div" style="width: 400px; height: 400px; display: inline-block;"></div>
-            <div id="chart_div2" style="width: 400px; height: 400px; display: inline-block;"></div>
-            <div id="chart_div3" style="width: 400px; height: 400px; display: inline-block;"></div>
+           
+        </div>
+        </div>
 
-
-                   
-                </form>
   </body>
 </html>
