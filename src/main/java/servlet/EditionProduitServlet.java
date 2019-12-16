@@ -53,7 +53,6 @@ public class EditionProduitServlet extends HttpServlet {
         boolean ok = false;
         boolean ok2= false;
         
-        System.out.println("______________________________________________________________________"+action);
         if (action != null ) {
             switch(action){
             case "Save":

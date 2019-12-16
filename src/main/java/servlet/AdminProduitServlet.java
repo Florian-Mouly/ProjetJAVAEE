@@ -71,6 +71,20 @@ public class AdminProduitServlet extends HttpServlet {
                     break;
                     
             }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // val[O] -> type du bouton
+            // val[1] -> reference du produit selectione
+//            try{
+//                String[] val=action.split(";");
+//                if(val[0].equals("Modifier")){
+//                    Produit produitCourant=daoproduit.getProduit(Integer.parseInt(val[1]));
+//                    request.setAttribute("produitCourant", produitCourant);
+//                    response.sendRedirect("EditionProduitServlet");
+//                }
+//            }catch(Exception e){
+//
+//            }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if( !ok && !ok2 && !ok3 && (Integer.parseInt(action)>0) && (Integer.parseInt(action)<999)){
                 System.out.println("delete "+action);
                 daoproduit.supprProduit(Integer.parseInt(action));
