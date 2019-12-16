@@ -68,9 +68,17 @@ public class AdminProduitServlet extends HttpServlet {
                 case "Edit":
                     ok3 = true;
                     response.sendRedirect("EditionProduitServlet");
+                    break;
                     
             }
+            if( !ok && !ok2 && !ok3 && (Integer.parseInt(action)>0) && (Integer.parseInt(action)<999)){
+                System.out.println("delete "+action);
+                daoproduit.supprProduit(Integer.parseInt(action));
+                listProduit=daoproduit.allProduit();
+            }   
         }
+        
+        
         
         if (ok == false && ok2 == false && ok3==false){
             

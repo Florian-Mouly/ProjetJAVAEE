@@ -38,7 +38,7 @@
                 <table border="1" class="infocommandes" >
                     <thead><tr><td>Nom</td><td>Fournisseur</td><td>Categorie</td><td>Quantite/Unite</td><td>Prix Unitaire</td><td>Unite en stock</td><td>Unites commandees</td><td>Niveau de reapprovisionnement</td><td>Indisponible</br> 1 -> Oui 0 -> Non</td></tr></thead>
                     <c:forEach items="${listProduit}" var="prod">
-                        <tr><td>${prod.getNom()}</td><td>${prod.getFournisseur()}</td><td>${prod.getCategorie()}</td><td>${prod.getQuantite_par_unite()}</td><td>${prod.getPrix_unitaire()}</td><td>${prod.getUnite_en_stock()}</td><td>${prod.getUnites_commandees()}</td><td>${prod.getNiveau_de_reapprovi()}</td><td>${prod.getIndisponible()}</td></tr>
+                        <tr><td>${prod.getNom()}</td><td>${prod.getFournisseur()}</td><td>${prod.getCategorie()}</td><td>${prod.getQuantite_par_unite()}</td><td>${prod.getPrix_unitaire()}</td><td>${prod.getUnite_en_stock()}</td><td>${prod.getUnites_commandees()}</td><td>${prod.getNiveau_de_reapprovi()}</td><td>${prod.getIndisponible()}</td><td><form><button type="submit" class="btn" name="action" value="${prod.reference}">Supprimer</button></form></td></tr>
                     </c:forEach>
                         
                 </table>
