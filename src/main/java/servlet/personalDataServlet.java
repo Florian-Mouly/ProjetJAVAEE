@@ -51,10 +51,9 @@ public class personalDataServlet extends HttpServlet {
         clientCourant = daoclient.getClient(client);
         String action = request.getParameter("action");
         boolean ok = false;
+        boolean ok2= false;
         
-        
-        System.out.println("----------------------TEST-----------------------------");
-        System.out.println(action);
+
         if (action != null ) {
             switch(action){
             case "Envoyer":
@@ -76,9 +75,15 @@ public class personalDataServlet extends HttpServlet {
             case "Voir":
                 ok = true;
                 response.sendRedirect("commandeClientServlet");
+                break;
+            case "Deco":
+                ok2= true;
+                session.setAttribute("contact",null);
+                response.sendRedirect("AccueilServlet");
+                break;
             }
         }
-        if(ok == false){
+        if(ok == false && ok2 == false){
             request.setAttribute("clientCourant", clientCourant);
             this.getServletContext().getRequestDispatcher("/personalData.jsp").forward(request, response);
         }

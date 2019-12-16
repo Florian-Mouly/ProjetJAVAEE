@@ -34,13 +34,10 @@ import javax.sql.DataSource;
 @WebServlet(name = "commandeClientServlet", urlPatterns = {"/commandeClientServlet"})
 public class commandeClientServlet extends HttpServlet {
 
-    private static DataSource dataSource = DataSourceFactory.getDataSource();
-    public CommandeDAO commandeDAO;
-    public ClientDAO clientDAO;
+    private static DataSource datasource = DataSourceFactory.getDataSource();
     public List<Commande> list_commande;
-    public DataSource datasource;
-    public Client clientCourant;
-    ClientDAO daoclient = new ClientDAO(dataSource);
+    ClientDAO clientDAO = new ClientDAO(datasource);
+    CommandeDAO commandeDAO = new CommandeDAO(datasource);
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -49,32 +46,33 @@ public class commandeClientServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         String client = (String)session.getAttribute("contact");
-        datasource= DataSourceFactory.getDataSource();
-        clientDAO = new ClientDAO(datasource);
-        commandeDAO = new CommandeDAO(datasource);
-        clientCourant = daoclient.getClient(client);
+        
         String clientCode = clientDAO.getClient(client).getCode();
         list_commande=commandeDAO.getCommande(clientCode);
-        
-        boolean ok = false;
         String action = request.getParameter("action");
         
+        
+        boolean ok = false;
+        boolean ok2 = false;
+        
+        System.out.println("---------------------------------------");
         if (action != null ) {
             switch(action){
             case "Accueil":
-                 response.sendRedirect("AcceuilServlet");
-                 break;
-            case "Info":
-                 ok = true;
-                 response.sendRedirect("personalData");
+                ok = true;
+                session.setAttribute("contact",null);
+                response.sendRedirect("AccueilServlet");
+                break;
+            case "Retour":
+                ok2 = true;
+                response.sendRedirect("personalDataServlet");
             }
         }
-           if(ok == false){
-            request.setAttribute("clientCourant", clientCourant);
+        if(ok == false && ok2 == false){
+            request.setAttribute("list_commande", list_commande);
             this.getServletContext().getRequestDispatcher("/listeCommandes.jsp").forward(request, response);
         }
-                
-        request.setAttribute("list_commande", list_commande);
+        
         
         
     }

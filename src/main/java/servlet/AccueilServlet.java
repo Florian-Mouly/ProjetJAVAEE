@@ -93,7 +93,7 @@ public class AccueilServlet extends HttpServlet {
             if((id.equals("admin"))&&(mdp.equals("admin"))){
                 HttpSession session = request.getSession();
                 session.setAttribute("contact", "admin");
-                this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
+                response.sendRedirect("ChiffreAffaireClientServlet");
             } else {
                 list_client=daoclient.allClient();
                 for (Client client:list_client){

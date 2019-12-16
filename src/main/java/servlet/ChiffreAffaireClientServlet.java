@@ -5,8 +5,11 @@
  */
 package servlet;
 
+import DAO.ClientDAO;
 import DAO.CommandeDAO;
 import DAO.DataSourceFactory;
+import Entities.Client;
+import Entities.Commande;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
@@ -14,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import static java.lang.System.out;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -23,6 +27,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 /**
  *
@@ -30,6 +36,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ChiffreAffaireClientServlet", urlPatterns = {"/ChiffreAffaireClientServlet"})
 public class ChiffreAffaireClientServlet extends HttpServlet {
+
+    private static DataSource dataSource = DataSourceFactory.getDataSource();
+    public List<Client> list_client;
+    public List<Commande> list_commande;
+    CommandeDAO daoCom = new CommandeDAO(dataSource);
+    ClientDAO dacCli = new ClientDAO(dataSource);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,23 +54,34 @@ public class ChiffreAffaireClientServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-                CommandeDAO dao = new CommandeDAO(DataSourceFactory.getDataSource());
+                
+                HttpSession session = request.getSession();
+                
                 Properties result = new Properties();
-                try{
-                    String dateDeb = request.getParameter("dateDeb");
-                    String dateFin = request.getParameter("dateFin");
-                    result.put("records", dao.getNBCommandeParClient(dateDeb, dateFin));
-                } catch (SQLException ex){
-                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		    result.put("records", Collections.EMPTY_LIST);
-		    result.put("message", ex.getMessage());
+                String action = request.getParameter("action");
+                Map<String, Integer> listOfCommande = daoCom.getNBAllCommandeParClient();
+                Gson gson = new Gson();
+                String json = gson.toJson(listOfCommande);
+                request.setAttribute("listOfCommande", listOfCommande);
+                
+                System.out.println("--TEST--");
+                System.out.println(action);
+                boolean ok = false;
+                
+                if (action != null ) {
+                    switch(action){
+                        case "Accueil":
+                            ok = true;
+                            session.setAttribute("contact",null);
+                            response.sendRedirect("AccueilServlet");
+                            break;
+                    }
                 }
-                try(PrintWriter out = response.getWriter()){
-                    response.setContentType("application/json;charset=UTF-8");   
-                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                    String Datajson = gson.toJson(result);
-                    out.println("data="+Datajson);
-               }
+                if (ok == false){
+                    this.getServletContext().getRequestDispatcher("/viewStats.jsp").forward(request, response);
+                }
+                
+                
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

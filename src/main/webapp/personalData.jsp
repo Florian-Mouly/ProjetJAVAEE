@@ -131,6 +131,7 @@
                 <button type="button" class="btn btn-outline-dark" onclick="modifformtest()" >Modifier</button> -->
                 <button type="submit" class="btn" name="action" value="Envoyer">Envoyer</button>
                 <button type="submit" class="btn" name="action" value="Voir">Vos Commandes</button>
+                <button type="submit" class="btn" name="action" value="Deco">Déconnexion</button>
             </form>
             </div>
         </div>
