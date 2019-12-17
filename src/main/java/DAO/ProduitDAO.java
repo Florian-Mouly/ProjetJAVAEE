@@ -177,7 +177,7 @@ public class ProduitDAO {
         }
         
         public void updateProduit(String nom,int reference, int fournisseur, int categorie,
-                                    String Quantite_Par_Unite, float Prix_unitaire, int Unites_en_Stock, 
+                                    String Quantite_Par_Unite, double Prix_unitaire, int Unites_en_Stock, 
                                     int Unites_commandees, int Niveau_de_reappro, int Indisponible) throws SQLException {
 
             String sql = "update produit set reference=?,nom=?,fournisseur=?,categorie=?,quantite_par_unite=?,prix_unitaire=?,unites_en_stock=?,unites_commandees=?,niveau_de_reappro=?,indisponible=? where reference=?";
@@ -189,7 +189,7 @@ public class ProduitDAO {
                 stmt.setInt(3,fournisseur);
                 stmt.setInt(4,categorie);
                 stmt.setString(5,Quantite_Par_Unite);
-                stmt.setFloat(6,Prix_unitaire);
+                stmt.setDouble(6,Prix_unitaire);
                 stmt.setInt(7,Unites_en_Stock);
                 stmt.setInt(8,Unites_commandees);
                 stmt.setInt(9,Niveau_de_reappro);

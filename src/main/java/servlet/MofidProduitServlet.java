@@ -5,13 +5,14 @@
  */
 package servlet;
 
+import DAO.ClientDAO;
 import DAO.DataSourceFactory;
 import DAO.ProduitDAO;
+import Entities.Client;
 import Entities.Produit;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -26,13 +27,13 @@ import javax.sql.DataSource;
  *
  * @author Flo pc
  */
-@WebServlet(name = "AdminProduitServlet", urlPatterns = {"/AdminProduitServlet"})
-public class AdminProduitServlet extends HttpServlet {
+@WebServlet(name = "MofidProduitServlet", urlPatterns = {"/MofidProduitServlet"})
+public class MofidProduitServlet extends HttpServlet {
 
-    private static DataSource dataSource = DataSourceFactory.getDataSource();
-    public List<Produit> listProduit;
-    ProduitDAO  daoproduit = new ProduitDAO(dataSource);
-    
+        private static DataSource dataSource = DataSourceFactory.getDataSource();
+        public Produit produit_courant;
+        ProduitDAO daoproduit = new ProduitDAO(dataSource);
+        
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,59 +49,36 @@ public class AdminProduitServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        listProduit = daoproduit.allProduit();
         
+        String produit = (String) session.getAttribute("produitCourant");
+        produit_courant = daoproduit.getProduitByName(produit);
         boolean ok = false;
-        boolean ok2 = false;
-        boolean ok3 = false;
-        boolean ok4 = false;
-        
         if (action != null ) {
             switch(action){
-                case "Accueil":
-                    ok = true;
-                    session.setAttribute("contact",null);
-                    response.sendRedirect("AccueilServlet");
+                case "Envoyer":
+                    System.out.println("TEST ENVOYER");
+                    String nom = request.getParameter("Nom");
+                    int fournisseur = Integer.parseInt(request.getParameter("Fournisseur"));
+                    int categorie = Integer.parseInt(request.getParameter("Categorie"));
+                    String quantite_par_unite = request.getParameter("Quantite_par_unite");
+                    Double prix_unitaire = Double.parseDouble(request.getParameter("Prix_unitaire"));
+                    int unite_en_stock = Integer.parseInt(request.getParameter("Unite_en_stock"));
+                    int unites_commandees = Integer.parseInt(request.getParameter("Unites_commandees"));
+                    int niveau_de_reapprovi = Integer.parseInt(request.getParameter("Niveau_de_reapprovi"));
+                    int indisponible = Integer.parseInt(request.getParameter("Indisponible"));
+                    int ref=66;
+                    daoproduit.updateProduit(nom, ref, fournisseur, categorie, quantite_par_unite, prix_unitaire, unite_en_stock, unites_commandees, niveau_de_reapprovi, indisponible);
+                    produit_courant = daoproduit.getProduitByName(nom);
                     break;
                 case "Retour":
-                    ok2 = true;
-                    response.sendRedirect("ChiffreAffaireClientServlet");
+                    ok = true;
+                    response.sendRedirect("AdminProduitServlet");
                     break;
-                case "Edit":
-                    ok3 = true;
-                    response.sendRedirect("EditionProduitServlet");
-                    break;
-               
             }
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // val[O] -> type du bouton
-            // val[1] -> reference du produit selectione
-
-                String[] val=action.split(";");
-                if( !ok && !ok2 && !ok3 && val[0].equals("modifier")){
-                    Produit produitCourant=daoproduit.getProduit(Integer.parseInt(val[1]));
-                    request.setAttribute("produitCourant", produitCourant);
-                    response.sendRedirect("ModifProduitServlet");
-                }
-            
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            if( !ok && !ok2 && !ok3 && (Integer.parseInt(action)>0) && (Integer.parseInt(action)<999)){
-                System.out.println("delete "+action);
-                daoproduit.supprProduit(Integer.parseInt(action));
-                listProduit=daoproduit.allProduit();
-            }   
         }
-        
-        
-        
-        if (ok == false && ok2 == false && ok3==false){
-            
-            request.setAttribute("listProduit", listProduit);
-            this.getServletContext().getRequestDispatcher("/listeProduitsAdmin.jsp").forward(request, response);
+        if(ok == false){
+            this.getServletContext().getRequestDispatcher("/modifProduit.jsp").forward(request, response);
         }
-        
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -115,11 +93,11 @@ public class AdminProduitServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminProduitServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            try {
+                processRequest(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(MofidProduitServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 
     /**
@@ -133,11 +111,11 @@ public class AdminProduitServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminProduitServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            try {
+                processRequest(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(MofidProduitServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 
     /**

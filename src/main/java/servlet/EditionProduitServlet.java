@@ -72,9 +72,9 @@ public class EditionProduitServlet extends HttpServlet {
                 response.sendRedirect("AdminProduitServlet");
                 ok2= true;
                 break;
-            case "Voir":
+            case "Retour":
                 ok = true;
-                response.sendRedirect("commandeClientServlet");
+                response.sendRedirect("AdminProduitServlet");
                 break;
             case "Deco":
                 ok2= true;

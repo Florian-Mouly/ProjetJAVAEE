@@ -68,6 +68,7 @@
                 <!--<button type="button" class="btn btn-dark" ><a onclick='enrformtest()'>Enregistrer</a></button>
                 <button type="button" class="btn btn-outline-dark" onclick="modifformtest()" >Modifier</button> -->
                 <button type="submit" class="btn" name="action" value="Save">Enregistrer</button>
+                <button type="submit" class="btn" name="action" value="Retour">Retour</button>
             </form>
             </div>
         </div>
