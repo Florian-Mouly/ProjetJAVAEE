@@ -38,7 +38,9 @@ public class ProduitDAO {
         }
 
 	/**
-         * 
+         * Tous les produits
+         * @return Liste de produit
+         * @throws java.sql.SQLException
          */
         public List<Produit> allProduit() throws SQLException{
             List<Produit> result = new LinkedList<>();
@@ -105,7 +107,7 @@ public class ProduitDAO {
 	}
         
         /**
-	 * Produit en fonction de sa reference
+	 * Produit en fonction de son nom
 	 * @return Produit
 	 * @throws SQLException renvoyées par JDBC
 	 */
@@ -138,6 +140,20 @@ public class ProduitDAO {
 	}
 
         
+        /**
+	 * Ajoute un produit
+         * @param nom
+         * @param reference
+         * @param fournisseur
+         * @param categorie
+         * @param Quantite_Par_Unite
+         * @param Prix_unitaire
+         * @param Unites_en_Stock
+         * @param Unites_commandees
+         * @param Niveau_de_reappro
+         * @param Indisponible
+	 * @throws SQLException renvoyées par JDBC
+	 */
         public void ajoutProduit(String nom,int reference, int fournisseur, int categorie,
                                     String Quantite_Par_Unite, Double Prix_unitaire, int Unites_en_Stock, 
                                     int Unites_commandees, int Niveau_de_reappro, int Indisponible) throws SQLException {
@@ -176,6 +192,21 @@ public class ProduitDAO {
             }
         }
         
+        
+        /**
+	 * Met à jour un produit
+         * @param nom
+         * @param reference
+         * @param fournisseur
+         * @param categorie
+         * @param Quantite_Par_Unite
+         * @param Prix_unitaire
+         * @param Unites_commandees
+         * @param Unites_en_Stock
+         * @param Niveau_de_reappro
+         * @param Indisponible
+	 * @throws SQLException renvoyées par JDBC
+	 */
         public void updateProduit(String nom,int reference, int fournisseur, int categorie,
                                     String Quantite_Par_Unite, double Prix_unitaire, int Unites_en_Stock, 
                                     int Unites_commandees, int Niveau_de_reappro, int Indisponible) throws SQLException {
@@ -205,7 +236,11 @@ public class ProduitDAO {
             }
         }
         
-        
+        /**
+	 * Supprime un produit
+         * @param reference
+	 * @throws SQLException renvoyées par JDBC
+	 */
         public void supprProduit(int reference)throws SQLException{
             String sql = "DELETE FROM PRODUIT WHERE REFERENCE = ?";
             try (Connection connection = myDataSource.getConnection(); 
@@ -222,7 +257,7 @@ public class ProduitDAO {
         
         
         /**
-	 * Produit en fonction de sa reference
+	 * Produit en fonction de sa categorie
 	 * @return Produit
 	 * @throws SQLException renvoyées par JDBC
 	 */

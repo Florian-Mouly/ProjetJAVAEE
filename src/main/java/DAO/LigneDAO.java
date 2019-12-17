@@ -33,8 +33,8 @@ public class LigneDAO {
 	}
         
         /**
-	 * Contenu de la table Commande
-	 * @return Liste des commandes
+	 * Contenu de la table Ligne
+	 * @return Liste des lignes
 	 * @throws SQLException renvoyées par JDBC
 	 */
 	public List<Ligne> allLignes() throws SQLException {
